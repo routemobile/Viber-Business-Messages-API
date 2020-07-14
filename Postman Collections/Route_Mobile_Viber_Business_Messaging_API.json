@@ -60,7 +60,7 @@
                 }
               }
             },
-            "url": "https://apis.rmlconnect.net/viber/staging/api/api/v2/send"
+            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
           },
           "response": []
         },

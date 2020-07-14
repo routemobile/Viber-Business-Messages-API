@@ -110,19 +110,19 @@
               {
                 "key": "Authorization",
                 "type": "text",
-                "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZGVtbyIsInVzZXJuYW1lIjoiZGVtbyIsImV4cCI6MTg4NjQwODQ2NCwiZW1haWwiOiJha2FzcmFuamFuQGdtYWlsLmNvbSIsIm9yaWdfaWF0IjoxNTcxMDQ4NDY0LCJjdXN0b21lcl9pZCI6IjlpcjVEZzdidnNDQSJ9.xEY-8sDcUUDSz4F34aVqThCzGK9WSyO-VUuEIpVooS4"
+                "value": "{token}"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"hello RML  123\",\n\t\"button_text\": \"click\",\n\t\"button_link\": \"https://www.google.com\",\n\t\"img\": \"http://pngimg.com/uploads/viber/viber_PNG26.png\",\n\t\"message_type\": \"template\",\n\t\"method\": \"two_way\"\n}",
+              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"button_text\": \"{button text}\",\n\t\"button_link\": \"{button link with https://}\",\n\t\"img\": \"{image link with https:// with extension}\",\n\t\"message_type\": \"template\",\n\t\"method\": \"two_way\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "url": "https://apis.rmlconnect.net/viber/staging/api/api/v2/send"
+            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
           },
           "response": []
         },

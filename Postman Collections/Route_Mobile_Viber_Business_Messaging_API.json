@@ -1,0 +1,236 @@
+{
+  "info": {
+    "_postman_id": "b2b97677-8d96-4c19-9aa5-39026b678baf",
+    "name": "Route Mobile Viber Business Messaging API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "One way API",
+      "item": [
+        {
+          "name": "One Way Text Button Image",
+          "_postman_id": "8820990a-1b19-4284-8744-7ab4ecc52892",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{token}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"button_text\": \"{button text}\",\n\t\"button_link\": \"{button link with https://}\",\n\t\"img\": \"{image link with https:// with extension}\",\n\t\"message_type\": \"template\",\n\t\"method\": \"one_way\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://apis.rmlconnect.net/viber/staging/api/api/v2/send"
+          },
+          "response": []
+        },
+        {
+          "name": "One Way Text Button",
+          "_postman_id": "3a952c0e-2372-4e1f-9c90-dc2bddff7096",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{token}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"button_text\": \"{button text}\",\n\t\"button_link\": \"{button link with https://}\",\n\t\"message_type\": \"media\",\n\t\"method\": \"one_way\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://apis.rmlconnect.net/viber/staging/api/api/v2/send"
+          },
+          "response": []
+        },
+        {
+          "name": "One Way Text",
+          "_postman_id": "7ae58805-3218-4ba6-9905-cb903a373d00",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{token}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"message_type\": \"text\",\n\t\"method\": \"one_way\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://apis.rmlconnect.net/viber/staging/api/api/v2/send"
+          },
+          "response": []
+        }
+      ],
+      "_postman_id": "514e0aea-7e1f-4ccd-a542-5f9e7d9226af"
+    },
+    {
+      "name": "Two way API",
+      "item": [
+        {
+          "name": "Two Way Text Button Image",
+          "_postman_id": "0dc8730f-6c68-44ad-9564-45535912644c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "type": "text",
+                "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZGVtbyIsInVzZXJuYW1lIjoiZGVtbyIsImV4cCI6MTg4NjQwODQ2NCwiZW1haWwiOiJha2FzcmFuamFuQGdtYWlsLmNvbSIsIm9yaWdfaWF0IjoxNTcxMDQ4NDY0LCJjdXN0b21lcl9pZCI6IjlpcjVEZzdidnNDQSJ9.xEY-8sDcUUDSz4F34aVqThCzGK9WSyO-VUuEIpVooS4"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"hello RML  123\",\n\t\"button_text\": \"click\",\n\t\"button_link\": \"https://www.google.com\",\n\t\"img\": \"http://pngimg.com/uploads/viber/viber_PNG26.png\",\n\t\"message_type\": \"template\",\n\t\"method\": \"two_way\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://apis.rmlconnect.net/viber/staging/api/api/v2/send"
+          },
+          "response": []
+        },
+        {
+          "name": "Two Way Text Button",
+          "_postman_id": "bf69d9c7-94b2-498b-9d77-6e1a71589afb",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "type": "text",
+                "value": "{token}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"button_text\": \"{button text}\",\n\t\"button_link\": \"{button link with https://}\",\n\t\"message_type\": \"media\",\n\t\"method\": \"two_way\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://apis.rmlconnect.net/viber/staging/api/api/v2/send"
+          },
+          "response": []
+        },
+        {
+          "name": "Two Way Text",
+          "_postman_id": "3a510e41-4955-4abe-8dc1-cf8305a2be3a",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{token}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"message_type\": \"text\",\n\t\"method\": \"two_way\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://apis.rmlconnect.net/viber/staging/api/api/v2/send"
+          },
+          "response": []
+        }
+      ],
+      "_postman_id": "32b9990a-58db-415c-ab1b-17e7c1f2cac3"
+    },
+    {
+      "name": "Login",
+      "_postman_id": "175f2018-2228-400b-93b5-75f30dc99f36",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\":\"{usename}\",\r\n  \"password\":\"{password}\"\r\n}\r\n",
+          "options": {
+            "raw": {}
+          }
+        },
+        "url": "https://apis.rmlconnect.net/auth/v1/login/"
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "c7c0ef1d-46e7-4749-a360-506f3484c9c8",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "0fc49263-2801-49d6-aaaa-3db47412db2c",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}

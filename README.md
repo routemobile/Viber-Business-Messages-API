@@ -22,7 +22,7 @@ Please download and fill the form and send on Viber@routemobile.com
 
 
 ### API Installation 
-Use Postman for API for import and run the collection
+Use Postman for API import and run the collection
 
 
 ***

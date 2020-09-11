@@ -119,6 +119,34 @@
             "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
           },
           "response": []
+        },
+        {
+          "name": "One Way Image Copy",
+          "_postman_id": "85930f3c-22d7-4070-97c6-d7e42396c674",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "type": "text",
+                "value": "{token}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"img\": \"{image link with https:// with extension}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"image\",\n\t\"method\": \"one_way\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
+          },
+          "response": []
         }
       ],
       "_postman_id": "514e0aea-7e1f-4ccd-a542-5f9e7d9226af"

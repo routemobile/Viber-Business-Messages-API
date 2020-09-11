@@ -237,34 +237,6 @@
             "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
           },
           "response": []
-        },
-        {
-          "name": "Two Way Image Copy",
-          "_postman_id": "c47ddbfb-d6bf-425c-943a-309210672f99",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "{token}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n    \"img\": \"{image link with https:// with extension}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"image\",\n\t\"method\": \"two_way\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
         }
       ],
       "_postman_id": "32b9990a-58db-415c-ab1b-17e7c1f2cac3"
@@ -330,68 +302,6 @@
         }
       ],
       "_postman_id": "74c83b6b-107b-48fd-ae26-7a12f7979746"
-    },
-    {
-      "name": "Session API Copy",
-      "item": [
-        {
-          "name": "Session Text",
-          "_postman_id": "97990b8e-9902-4694-ad37-c624a69c1b59",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"text\",\n\t\"method\": \"session\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
-        },
-        {
-          "name": "Session Image",
-          "_postman_id": "ae55f399-b343-42a9-b6ea-a4c1820a2d77",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"image\",\n\t\"method\": \"session\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
-        }
-      ],
-      "_postman_id": "028c89fe-eeec-4a63-89ff-88c5c41e7df2"
     },
     {
       "name": "Login",

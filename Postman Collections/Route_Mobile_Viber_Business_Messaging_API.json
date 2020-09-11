@@ -237,6 +237,34 @@
             "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
           },
           "response": []
+        },
+        {
+          "name": "Two Way Image Copy",
+          "_postman_id": "c47ddbfb-d6bf-425c-943a-309210672f99",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "type": "text",
+                "value": "{token}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n    \"img\": \"{image link with https:// with extension}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"image\",\n\t\"method\": \"two_way\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
+          },
+          "response": []
         }
       ],
       "_postman_id": "32b9990a-58db-415c-ab1b-17e7c1f2cac3"

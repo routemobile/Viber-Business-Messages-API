@@ -155,7 +155,7 @@
           "response": []
         },
         {
-          "name": "Two Way Image Copy",
+          "name": "Two Way Image",
           "_postman_id": "c7528e76-c1d2-4086-acd4-df256a88a088",
           "protocolProfileBehavior": {
             "disableBodyPruning": true

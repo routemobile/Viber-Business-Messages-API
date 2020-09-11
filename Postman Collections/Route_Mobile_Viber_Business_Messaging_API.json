@@ -9,6 +9,34 @@
       "name": "One way API",
       "item": [
         {
+          "name": "One Way Image Copy",
+          "_postman_id": "102a8b0c-8da6-49da-8e5c-3e6de0d6b614",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{token}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"img\": \"{image link with https:// with extension}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"image\",\n\t\"method\": \"one_way\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
+          },
+          "response": []
+        },
+        {
           "name": "One Way Text Button Image",
           "_postman_id": "8820990a-1b19-4284-8744-7ab4ecc52892",
           "protocolProfileBehavior": {
@@ -172,6 +200,34 @@
             "body": {
               "mode": "raw",
               "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"message_type\": \"text\",\n\t\"method\": \"two_way\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
+          },
+          "response": []
+        },
+        {
+          "name": "Two Way Image Copy",
+          "_postman_id": "c7528e76-c1d2-4086-acd4-df256a88a088",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "type": "text",
+                "value": "{token}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n    \"img\": \"{image link with https:// with extension}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"image\",\n\t\"method\": \"two_way\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

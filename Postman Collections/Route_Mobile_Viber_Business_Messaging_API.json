@@ -103,8 +103,8 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
+                "type": "text",
+                "value": "{token}"
               }
             ],
             "body": {

@@ -34,6 +34,7 @@ Use Postman for API import and run the collection
 
 * A message session uses two-way messaging, and is valid for 12 hours or 60 MT messages along with customer replies, whichever comes first. A session starts when an end user initiates a message and the customer replies. A session is charged a single rate. If the customer stops replying and then a session is valid for 10 MT messages 
 
+***
 
 ### On-boarding Highlights
 * On-boarding, Business profile management and Callback configuration will be taken care of by Route Mobile.
@@ -41,6 +42,8 @@ Use Postman for API import and run the collection
 * Route Mobile will map the brand's Service ID under their master account.
 * Route Mobile provides APIs as well as a dashboard to send messages to brand’s end users. A unique user credentials will be shared with the brand.
 * In case if a brand wants to receive real-time delivery reports and incoming messages,brand to share their callback URL with Route Mobile for configuration. Delivery reports are also available on the dashboard provided by Route Mobile.
+
+***
 
 ### Post going-live
 * Profile management, Change in callback configuration and Support activities will be taken care of by Route Mobile.
@@ -51,6 +54,7 @@ Use Postman for API import and run the collection
 * Billing for each brand will be invoiced separately. A monthly invoice will be raised to the brand around the beginning of the next month. Calculation will be done on the basis of agreed message count and pricing structure. Payment of invoices will be due within 30 days of the receipt thereof.
 * Brand can cross verify on the bill generated, by pulling a monthly report from dashboard or via real time delivery reports shared over callback URL.
 
+***
 
 ### API Type
 **One-way**
@@ -62,7 +66,6 @@ Dialogue initiated by the end user or customer with the recipient being able to 
 
 
 ***
-
 
 ### Commerical 
 **Monthly rental** 
@@ -99,9 +102,13 @@ Dialogue initiated by the end user or customer with the recipient being able to 
 
 Support (L1)  Engineering /Product (L2)  Sales (L3)
 
+***
+
 ### FAQ
 
 Please refer to the [FAQ section](
+
+***
 
 ### License 
 

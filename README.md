@@ -106,7 +106,7 @@ Support (L1)  Engineering /Product (L2)  Sales (L3)
 
 ### FAQ
 
-Please refer to the [FAQ section](
+Please refer to the [FAQ section](https://github.com/routemobile/Viber-Business-Messages-API/wiki/FAQ) here
 
 ***
 

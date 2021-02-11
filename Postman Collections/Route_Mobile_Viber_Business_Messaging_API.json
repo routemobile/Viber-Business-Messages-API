@@ -242,68 +242,6 @@
       "_postman_id": "32b9990a-58db-415c-ab1b-17e7c1f2cac3"
     },
     {
-      "name": "Session API",
-      "item": [
-        {
-          "name": "Session Text",
-          "_postman_id": "8df9848a-e413-456a-8343-b0b425868285",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"text\",\n\t\"method\": \"session\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
-        },
-        {
-          "name": "Session Image",
-          "_postman_id": "3eec4ed6-c5b6-44aa-89c8-123f1a14c7ca",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"img\": \"{image link with https:// with extension}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"image\",\n\t\"method\": \"session\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
-        }
-      ],
-      "_postman_id": "74c83b6b-107b-48fd-ae26-7a12f7979746"
-    },
-    {
       "name": "Login",
       "_postman_id": "175f2018-2228-400b-93b5-75f30dc99f36",
       "protocolProfileBehavior": {

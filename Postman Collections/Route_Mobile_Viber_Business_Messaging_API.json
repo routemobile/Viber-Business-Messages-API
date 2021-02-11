@@ -334,7 +334,7 @@
               {
                 "key": "Authorization",
                 "type": "text",
-                "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiTWVlbmFDbGljayIsInVzZXJuYW1lIjoiTWVlbmFDbGljayIsImV4cCI6MTkxNDkyOTY1OCwiZW1haWwiOiJmaXJvei5ob3NzYWluMUBzc2x3aXJlbGVzcy5jb20iLCJvcmlnX2lhdCI6MTU5OTU2OTY1OCwiY3VzdG9tZXJfaWQiOiJwZHEzS1JWdzBoTEEifQ.xSQ5XUFEL5a7qjnygQ02_PeNuHVuJ0IomOmQPK0T21I"
+                "value": "{token}"
               }
             ],
             "body": {
@@ -390,7 +390,7 @@
               {
                 "key": "Authorization",
                 "type": "text",
-                "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZGVtbyIsInVzZXJuYW1lIjoiZGVtbyIsImV4cCI6MTg4NjQwODQ2NCwiZW1haWwiOiJha2FzcmFuamFuQGdtYWlsLmNvbSIsIm9yaWdfaWF0IjoxNTcxMDQ4NDY0LCJjdXN0b21lcl9pZCI6IjlpcjVEZzdidnNDQSJ9.xEY-8sDcUUDSz4F34aVqThCzGK9WSyO-VUuEIpVooS4"
+                "value": "{token}"
               }
             ],
             "body": {
@@ -446,7 +446,7 @@
               {
                 "key": "Authorization",
                 "type": "text",
-                "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiTWVlbmFDbGljayIsInVzZXJuYW1lIjoiTWVlbmFDbGljayIsImV4cCI6MTkxNDkyOTY1OCwiZW1haWwiOiJmaXJvei5ob3NzYWluMUBzc2x3aXJlbGVzcy5jb20iLCJvcmlnX2lhdCI6MTU5OTU2OTY1OCwiY3VzdG9tZXJfaWQiOiJwZHEzS1JWdzBoTEEifQ.xSQ5XUFEL5a7qjnygQ02_PeNuHVuJ0IomOmQPK0T21I"
+                "value": "{token}"
               }
             ],
             "body": {
@@ -508,7 +508,7 @@
               {
                 "key": "Authorization",
                 "type": "text",
-                "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZGVtbyIsInVzZXJuYW1lIjoiZGVtbyIsImV4cCI6MTg4NjQwODQ2NCwiZW1haWwiOiJha2FzcmFuamFuQGdtYWlsLmNvbSIsIm9yaWdfaWF0IjoxNTcxMDQ4NDY0LCJjdXN0b21lcl9pZCI6IjlpcjVEZzdidnNDQSJ9.xEY-8sDcUUDSz4F34aVqThCzGK9WSyO-VUuEIpVooS4"
+                "value": "{token}"
               }
             ],
             "body": {

@@ -513,7 +513,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {\n        \"text\": \"{message}\",\n        \"message_type\": \"text\",\n        \"method\": \"one_way\"\n    }\n}",
+              "raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {\n        \"text\": \"{message}\",\n        \"message_type\": \"text\",\n        \"method\": \"one_way\"\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"

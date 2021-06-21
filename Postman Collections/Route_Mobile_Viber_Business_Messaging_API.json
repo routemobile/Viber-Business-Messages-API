@@ -10,7 +10,7 @@
       "item": [
         {
           "name": "Single Text Button Image",
-          "_postman_id": "8f798268-71ea-47c8-a630-08c1d07634eb",
+          "id": "8f798268-71ea-47c8-a630-08c1d07634eb",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -38,7 +38,7 @@
         },
         {
           "name": "Campaign Text Button Image",
-          "_postman_id": "20c2efa0-7047-4e9d-9d6d-c859a9620d44",
+          "id": "20c2efa0-7047-4e9d-9d6d-c859a9620d44",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -66,7 +66,7 @@
         },
         {
           "name": "Single Text Button",
-          "_postman_id": "70677545-1be7-49a6-a2b3-259097bdfb5d",
+          "id": "70677545-1be7-49a6-a2b3-259097bdfb5d",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -94,7 +94,7 @@
         },
         {
           "name": "Campaign Text Button",
-          "_postman_id": "1358daa3-1613-4c23-8abc-142ed64c5e00",
+          "id": "1358daa3-1613-4c23-8abc-142ed64c5e00",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -122,7 +122,7 @@
         },
         {
           "name": "Single Text",
-          "_postman_id": "7c3200b1-eed3-4523-9d9e-26854f7da2b0",
+          "id": "7c3200b1-eed3-4523-9d9e-26854f7da2b0",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -150,7 +150,7 @@
         },
         {
           "name": "Campaign Text",
-          "_postman_id": "58812f00-c368-4344-ae42-95b75c7c4d59",
+          "id": "58812f00-c368-4344-ae42-95b75c7c4d59",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -178,7 +178,7 @@
         },
         {
           "name": "Single Image",
-          "_postman_id": "a392cd1c-a503-4c29-80bd-ba2f25a1c13d",
+          "id": "a392cd1c-a503-4c29-80bd-ba2f25a1c13d",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -206,7 +206,7 @@
         },
         {
           "name": "Campaign Image",
-          "_postman_id": "26cb62bd-505b-4e7d-9008-082febcf2bd8",
+          "id": "26cb62bd-505b-4e7d-9008-082febcf2bd8",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -233,14 +233,14 @@
           "response": []
         }
       ],
-      "_postman_id": "72000740-5523-43f1-bc44-edd37012a942"
+      "id": "72000740-5523-43f1-bc44-edd37012a942"
     },
     {
       "name": "Two way API",
       "item": [
         {
           "name": "Single Text Button Image",
-          "_postman_id": "9d0597f2-85c9-4316-96d4-ba43b9b7eb5b",
+          "id": "9d0597f2-85c9-4316-96d4-ba43b9b7eb5b",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -268,7 +268,7 @@
         },
         {
           "name": "Campaign Text Button Image",
-          "_postman_id": "5b1fd013-40b8-494b-85fb-d386c86e832a",
+          "id": "5b1fd013-40b8-494b-85fb-d386c86e832a",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -296,7 +296,7 @@
         },
         {
           "name": "Single Text Button",
-          "_postman_id": "67122cd7-48d1-4256-849a-37357617ede1",
+          "id": "67122cd7-48d1-4256-849a-37357617ede1",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -324,7 +324,7 @@
         },
         {
           "name": "Campaign Text Button",
-          "_postman_id": "777fa5ee-c29e-4666-bf9b-c9163bee6c48",
+          "id": "777fa5ee-c29e-4666-bf9b-c9163bee6c48",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -352,7 +352,7 @@
         },
         {
           "name": "Single Text",
-          "_postman_id": "871f42d7-5799-4ef6-8721-c5e6b23fc1ed",
+          "id": "871f42d7-5799-4ef6-8721-c5e6b23fc1ed",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -380,7 +380,7 @@
         },
         {
           "name": "Campaign Text",
-          "_postman_id": "bac3adbc-b094-4ed7-92b7-77a44f70c7ea",
+          "id": "bac3adbc-b094-4ed7-92b7-77a44f70c7ea",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -408,7 +408,7 @@
         },
         {
           "name": "Single Image",
-          "_postman_id": "865422db-e059-41de-9c4d-8fa072588203",
+          "id": "865422db-e059-41de-9c4d-8fa072588203",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -436,7 +436,7 @@
         },
         {
           "name": "Campaign Image",
-          "_postman_id": "d95d88fc-3dcc-445c-9140-6b6b900f9ab5",
+          "id": "d95d88fc-3dcc-445c-9140-6b6b900f9ab5",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -463,14 +463,14 @@
           "response": []
         }
       ],
-      "_postman_id": "3eea89ea-b7ef-4b6d-b841-8e4cfde0ee20"
+      "id": "3eea89ea-b7ef-4b6d-b841-8e4cfde0ee20"
     },
     {
       "name": "Session API",
       "item": [
         {
           "name": "Session Text",
-          "_postman_id": "8ee8836c-0fd0-4fe4-9f97-e5974ef53a0a",
+          "id": "8ee8836c-0fd0-4fe4-9f97-e5974ef53a0a",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -498,7 +498,7 @@
         },
         {
           "name": "Campaign Text",
-          "_postman_id": "ada1ec4e-b25e-4a40-bf01-390cc10446db",
+          "id": "ada1ec4e-b25e-4a40-bf01-390cc10446db",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -526,7 +526,7 @@
         },
         {
           "name": "Session Image",
-          "_postman_id": "b2e17eb3-caac-45b7-a710-34e079066f1f",
+          "id": "b2e17eb3-caac-45b7-a710-34e079066f1f",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -554,7 +554,7 @@
         },
         {
           "name": "Campaign Image",
-          "_postman_id": "81de8494-76cc-4233-bc40-0437c7ebcacc",
+          "id": "81de8494-76cc-4233-bc40-0437c7ebcacc",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -581,11 +581,101 @@
           "response": []
         }
       ],
-      "_postman_id": "099e1d69-20bd-4219-a16a-01e066b2dbc1"
+      "id": "099e1d69-20bd-4219-a16a-01e066b2dbc1"
+    },
+    {
+      "name": "Callback Copy",
+      "item": [
+        {
+          "name": "Incoming Text",
+          "id": "27fcae32-b809-4baf-95da-52ea22786ef5",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{token}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n   \"phone_number\":\"972512222222\",\n   \"time\":2121212121,\n   \"message\":{\n      \"text\":\"a message to the sender\",\n      \"tracking_data\":\"tracking_id:100035\"\n   },\n   \"service_type\":\"two_way/session\",\n   \"request_id\":\"70d9758e-70ef-11eb-b813-a81e84a88e45\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{client callback}"
+          },
+          "response": []
+        },
+        {
+          "name": "Incoming Image/Video",
+          "id": "80138665-3a36-4a9d-b978-e57accc6774b",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{token}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"phone_number\":\"919987772222\",\n    \"time\":1622014595,\n    \"message\":{\n                \"tracking_data\":\"1361351180demo919987772222\",\n                \"media\":\"https://dl-media.viber.com/3/media/2/short/any/sig/image/0x0/8e78/c879\",\n                \"file_name\":\"1622014593480618.jpg\"\n              },\n    \"service_type\":\"two_way/session\",\n    \"request_id\":\"1a761762-bdf5-11eb-aa2f-0242ac120007\"\n  }\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{client callback}"
+          },
+          "response": []
+        },
+        {
+          "name": "Delivery Report",
+          "id": "a8338730-1412-48bb-868d-3f03689a9981",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{token}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n   \"message_status\":\"delivered/seen/expired/subscribe/unsubscribe\",\n   \"message_time\":1499163009878,\n   \"phone_number\":\"972518900007\",\n   \"service_type\":\"one_way/two_way/session\",\n   \"request_id\":\"a4a3bbf0-14ff-11eb-9acf-0242ac1a0008\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{client callback}"
+          },
+          "response": []
+        }
+      ],
+      "id": "d98da80a-a810-47ef-9d16-9d4d497b0472"
     },
     {
       "name": "Login",
-      "_postman_id": "175f2018-2228-400b-93b5-75f30dc99f36",
+      "id": "175f2018-2228-400b-93b5-75f30dc99f36",
       "protocolProfileBehavior": {
         "disableBodyPruning": true
       },
@@ -599,10 +689,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"username\":\"{usename}\",\r\n  \"password\":\"{password}\"\r\n}\r\n",
-          "options": {
-            "raw": {}
-          }
+          "raw": "{\r\n  \"username\":\"{usename}\",\r\n  \"password\":\"{password}\"\r\n}\r\n"
         },
         "url": "https://apis.rmlconnect.net/auth/v1/login/"
       },
@@ -610,7 +697,7 @@
     },
     {
       "name": "Campaign File Upload",
-      "_postman_id": "11eed310-f0b6-492e-9909-86ac9bfc6e01",
+      "id": "11eed310-f0b6-492e-9909-86ac9bfc6e01",
       "protocolProfileBehavior": {
         "disableBodyPruning": true
       },
@@ -659,10 +746,7 @@
               "type": "text",
               "disabled": true
             }
-          ],
-          "options": {
-            "formdata": {}
-          }
+          ]
         },
         "url": "https://apis.rmlconnect.net/vbs/api/v2/upload"
       },

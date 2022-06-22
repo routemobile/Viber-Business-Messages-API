@@ -1,778 +1,548 @@
 {
-  "info": {
-    "_postman_id": "b2b97677-8d96-4c19-9aa5-39026b678baf",
-    "name": "Route Mobile Viber Business Messaging API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "One way API",
-      "item": [
-        {
-          "name": "Single Text Button Image",
-          "id": "8f798268-71ea-47c8-a630-08c1d07634eb",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"button_text\": \"{button text}\",\n\t\"button_link\": \"{button link with https://}\",\n\t\"img\": \"{image link with https:// with extension}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"template\",\n\t\"method\": \"one_way\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
-        },
-        {
-          "name": "Campaign Text Button Image",
-          "id": "20c2efa0-7047-4e9d-9d6d-c859a9620d44",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "{token}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {       \n        \"text\": \"{Message}\",\n        \"button_text\": \"{button name}\",\n        \"button_link\": \"{button url with https://}\",\n        \"img\": \"{Public URL starting with http:// and ending with file extension}\",\n        \"message_type\": \"template\",\n        \"method\": \"one_way\"\n    }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
-          },
-          "response": []
-        },
-        {
-          "name": "Single Text Button",
-          "id": "70677545-1be7-49a6-a2b3-259097bdfb5d",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"button_text\": \"{button text}\",\n\t\"button_link\": \"{button link with https://}\",\n\t\"message_type\": \"media\",\n\t\"method\": \"one_way\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
-        },
-        {
-          "name": "Campaign Text Button",
-          "id": "1358daa3-1613-4c23-8abc-142ed64c5e00",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "{token}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {       \n        \"text\": \"{message}\",\n        \"button_text\": \"{button name}}\",\n        \"button_link\": \"{button url starting https://}\",\n        \"message_type\": \"media\",\n        \"method\": \"one_way\"\n    }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
-          },
-          "response": []
-        },
-        {
-          "name": "Single Text",
-          "id": "7c3200b1-eed3-4523-9d9e-26854f7da2b0",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"message_type\": \"text\",\n\t\"method\": \"one_way\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
-        },
-        {
-          "name": "Campaign Text",
-          "id": "58812f00-c368-4344-ae42-95b75c7c4d59",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "{token}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {\n        \"text\": \"{message}\",\n        \"message_type\": \"text\",\n        \"method\": \"one_way\"\n    }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
-          },
-          "response": []
-        },
-        {
-          "name": "Single Image",
-          "id": "a392cd1c-a503-4c29-80bd-ba2f25a1c13d",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"img\": \"{image link with https:// with extension}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"image\",\n\t\"method\": \"one_way\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
-        },
-        {
-          "name": "Campaign Image",
-          "id": "26cb62bd-505b-4e7d-9008-082febcf2bd8",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "{token}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {       \n        \"img\": \"{Public URL starting with http:// and ending with file extension}\",\n        \"message_type\": \"image\",\n        \"method\": \"one_way\"\n    }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
-          },
-          "response": []
-        }
-      ],
-      "id": "72000740-5523-43f1-bc44-edd37012a942"
-    },
-    {
-      "name": "Two way API",
-      "item": [
-        {
-          "name": "Single Text Button Image",
-          "id": "9d0597f2-85c9-4316-96d4-ba43b9b7eb5b",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "{token}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"button_text\": \"{button text}\",\n\t\"button_link\": \"{button link with https://}\",\n\t\"img\": \"{image link with https:// with extension}\",\n\t\"message_type\": \"template\",\n\t\"method\": \"two_way\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
-        },
-        {
-          "name": "Campaign Text Button Image",
-          "id": "5b1fd013-40b8-494b-85fb-d386c86e832a",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "{token}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {       \n        \"text\": \"{Message}\",\n        \"button_text\": \"{button name}\",\n        \"button_link\": \"{button url with https://}\",\n        \"img\": \"{Public URL starting with http:// and ending with file extension}\",\n        \"message_type\": \"template\",\n        \"method\": \"two_way\"\n    }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
-          },
-          "response": []
-        },
-        {
-          "name": "Single Text Button",
-          "id": "67122cd7-48d1-4256-849a-37357617ede1",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "{token}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"button_text\": \"{button text}\",\n\t\"button_link\": \"{button link with https://}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"media\",\n\t\"method\": \"two_way\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
-        },
-        {
-          "name": "Campaign Text Button",
-          "id": "777fa5ee-c29e-4666-bf9b-c9163bee6c48",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "{token}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {       \n        \"text\": \"{message}\",\n        \"button_text\": \"{button name}}\",\n        \"button_link\": \"{button url starting https://}\",\n        \"message_type\": \"media\",\n        \"method\": \"two_way\"\n    }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
-          },
-          "response": []
-        },
-        {
-          "name": "Single Text",
-          "id": "871f42d7-5799-4ef6-8721-c5e6b23fc1ed",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"message_type\": \"text\",\n\t\"method\": \"two_way\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
-        },
-        {
-          "name": "Campaign Text",
-          "id": "bac3adbc-b094-4ed7-92b7-77a44f70c7ea",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "{token}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {\n        \"text\": \"{message}\",\n        \"message_type\": \"text\",\n        \"method\": \"two_way\"\n    }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
-          },
-          "response": []
-        },
-        {
-          "name": "Single Image",
-          "id": "865422db-e059-41de-9c4d-8fa072588203",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "{token}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n    \"img\": \"{image link with https:// with extension}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"image\",\n\t\"method\": \"two_way\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
-        },
-        {
-          "name": "Campaign Image",
-          "id": "d95d88fc-3dcc-445c-9140-6b6b900f9ab5",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "{token}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {       \n        \"img\": \"{Public URL starting with http:// and ending with file extension}\",\n        \"message_type\": \"image\",\n        \"method\": \"two_way\"\n    }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
-          },
-          "response": []
-        }
-      ],
-      "id": "3eea89ea-b7ef-4b6d-b841-8e4cfde0ee20"
-    },
-    {
-      "name": "Session API",
-      "item": [
-        {
-          "name": "Session Text",
-          "id": "8ee8836c-0fd0-4fe4-9f97-e5974ef53a0a",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"text\",\n\t\"method\": \"session\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
-        },
-        {
-          "name": "Campaign Text",
-          "id": "ada1ec4e-b25e-4a40-bf01-390cc10446db",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "{token}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {\n        \"text\": \"{message}\",\n        \"message_type\": \"text\",\n        \"method\": \"one_way\"\n    }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
-          },
-          "response": []
-        },
-        {
-          "name": "Session Image",
-          "id": "b2e17eb3-caac-45b7-a710-34e079066f1f",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"img\": \"{image link with https:// with extension}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"image\",\n\t\"method\": \"session\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/send"
-          },
-          "response": []
-        },
-        {
-          "name": "Campaign Image",
-          "id": "81de8494-76cc-4233-bc40-0437c7ebcacc",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "type": "text",
-                "value": "{token}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {       \n        \"img\": \"{Public URL starting with http:// and ending with file extension}\",\n        \"message_type\": \"image\",\n        \"method\": \"session\"\n    }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
-          },
-          "response": []
-        }
-      ],
-      "id": "099e1d69-20bd-4219-a16a-01e066b2dbc1"
-    },
-    {
-      "name": "Callback",
-      "item": [
-        {
-          "name": "Incoming Text",
-          "id": "27fcae32-b809-4baf-95da-52ea22786ef5",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n   \"phone_number\":\"972512222222\",\n   \"time\":2121212121,\n   \"message\":{\n      \"text\":\"a message to the sender\",\n      \"tracking_data\":\"tracking_id:100035\"\n   },\n   \"service_type\":\"two_way/session\",\n   \"request_id\":\"70d9758e-70ef-11eb-b813-a81e84a88e45\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "{client callback}"
-          },
-          "response": []
-        },
-        {
-          "name": "Incoming Image/Video",
-          "id": "80138665-3a36-4a9d-b978-e57accc6774b",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"phone_number\":\"919987772222\",\n    \"time\":1622014595,\n    \"message\":{\n                \"tracking_data\":\"1361351180demo919987772222\",\n                \"media\":\"https://dl-media.viber.com/3/media/2/short/any/sig/image/0x0/8e78/c879\",\n                \"file_name\":\"1622014593480618.jpg\"\n              },\n    \"service_type\":\"two_way/session\",\n    \"request_id\":\"1a761762-bdf5-11eb-aa2f-0242ac120007\"\n  }\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "{client callback}"
-          },
-          "response": []
-        },
-        {
-          "name": "Delivery Report",
-          "id": "a8338730-1412-48bb-868d-3f03689a9981",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "{token}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n   \"message_status\":\"delivered/seen/expired/subscribe/unsubscribe\",\n   \"message_time\":1499163009878,\n   \"phone_number\":\"972518900007\",\n   \"service_type\":\"one_way/two_way/session\",\n   \"request_id\":\"a4a3bbf0-14ff-11eb-9acf-0242ac1a0008\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "{client callback}"
-          },
-          "response": []
-        }
-      ],
-      "id": "d98da80a-a810-47ef-9d16-9d4d497b0472"
-    },
-    {
-      "name": "Login",
-      "id": "175f2018-2228-400b-93b5-75f30dc99f36",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n  \"username\":\"{usename}\",\r\n  \"password\":\"{password}\"\r\n}\r\n"
-        },
-        "url": "https://apis.rmlconnect.net/auth/v1/login/"
-      },
-      "response": []
-    },
-    {
-      "name": "Campaign File Upload",
-      "id": "11eed310-f0b6-492e-9909-86ac9bfc6e01",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "{token}",
-            "type": "text"
-          },
-          {
-            "key": "Content-Type",
-            "value": "",
-            "disabled": true
-          }
-        ],
-        "body": {
-          "mode": "formdata",
-          "formdata": [
-            {
-              "key": "file",
-              "type": "file",
-              "src": "/C:/Users/RmlPro_Deeksha/Desktop/Testing/test not a viber user.txt"
-            },
-            {
-              "key": "file_mimetype",
-              "value": "text/csv",
-              "type": "text"
-            },
-            {
-              "key": "file_mimetype",
-              "value": "application/vnd.ms-excel",
-              "type": "text",
-              "disabled": true
-            },
-            {
-              "key": "file_mimetype",
-              "value": "text/plain",
-              "type": "text",
-              "disabled": true
-            },
-            {
-              "key": "file_mimetype",
-              "value": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              "type": "text",
-              "disabled": true
-            }
-          ]
-        },
-        "url": "https://apis.rmlconnect.net/vbs/api/v2/upload"
-      },
-      "response": []
-    }
-  ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "id": "c7c0ef1d-46e7-4749-a360-506f3484c9c8",
-        "type": "text/javascript",
-        "exec": [
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "id": "0fc49263-2801-49d6-aaaa-3db47412db2c",
-        "type": "text/javascript",
-        "exec": [
-          ""
-        ]
-      }
-    }
-  ]
+	"info": {
+		"_postman_id": "b2b97677-8d96-4c19-9aa5-39026b678baf",
+		"name": "Route Mobile Viber Business Messaging API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Two way API",
+			"item": [
+				{
+					"name": "Single Text Button Image",
+					"id": "9d0597f2-85c9-4316-96d4-ba43b9b7eb5b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{token}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"button_text\": \"{button text}\",\n\t\"button_link\": \"{button link with https://}\",\n\t\"img\": \"{image link with https:// with extension}\",\n\t\"message_type\": \"template\",\n\t\"method\": \"two_way\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://apis.rmlconnect.net/vbs/api/v2/send"
+					},
+					"response": []
+				},
+				{
+					"name": "Campaign Text Button Image",
+					"id": "5b1fd013-40b8-494b-85fb-d386c86e832a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{token}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {       \n        \"text\": \"{Message}\",\n        \"button_text\": \"{button name}\",\n        \"button_link\": \"{button url with https://}\",\n        \"img\": \"{Public URL starting with http:// and ending with file extension}\",\n        \"message_type\": \"template\",\n        \"method\": \"two_way\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
+					},
+					"response": []
+				},
+				{
+					"name": "Single Text Button",
+					"id": "67122cd7-48d1-4256-849a-37357617ede1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{token}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"button_text\": \"{button text}\",\n\t\"button_link\": \"{button link with https://}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"media\",\n\t\"method\": \"two_way\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://apis.rmlconnect.net/vbs/api/v2/send"
+					},
+					"response": []
+				},
+				{
+					"name": "Campaign Text Button",
+					"id": "777fa5ee-c29e-4666-bf9b-c9163bee6c48",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{token}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {       \n        \"text\": \"{message}\",\n        \"button_text\": \"{button name}}\",\n        \"button_link\": \"{button url starting https://}\",\n        \"message_type\": \"media\",\n        \"method\": \"two_way\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
+					},
+					"response": []
+				},
+				{
+					"name": "Single Text",
+					"id": "871f42d7-5799-4ef6-8721-c5e6b23fc1ed",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{token}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n\t\"message_type\": \"text\",\n\t\"method\": \"two_way\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://apis.rmlconnect.net/vbs/api/v2/send"
+					},
+					"response": []
+				},
+				{
+					"name": "Campaign Text",
+					"id": "bac3adbc-b094-4ed7-92b7-77a44f70c7ea",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{token}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {\n        \"text\": \"{message}\",\n        \"message_type\": \"text\",\n        \"method\": \"two_way\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
+					},
+					"response": []
+				},
+				{
+					"name": "Single Image",
+					"id": "865422db-e059-41de-9c4d-8fa072588203",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{token}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"phone\": \"{mobile with country code}\",\n    \"img\": \"{image link with https:// with extension}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"image\",\n\t\"method\": \"two_way\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://apis.rmlconnect.net/vbs/api/v2/send"
+					},
+					"response": []
+				},
+				{
+					"name": "Campaign Image",
+					"id": "d95d88fc-3dcc-445c-9140-6b6b900f9ab5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{token}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {       \n        \"img\": \"{Public URL starting with http:// and ending with file extension}\",\n        \"message_type\": \"image\",\n        \"method\": \"two_way\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
+					},
+					"response": []
+				}
+			],
+			"id": "3eea89ea-b7ef-4b6d-b841-8e4cfde0ee20"
+		},
+		{
+			"name": "Session API",
+			"item": [
+				{
+					"name": "Session Text",
+					"id": "8ee8836c-0fd0-4fe4-9f97-e5974ef53a0a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{token}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"text\": \"{text}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"text\",\n\t\"method\": \"session\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://apis.rmlconnect.net/vbs/api/v2/send"
+					},
+					"response": []
+				},
+				{
+					"name": "Campaign Text",
+					"id": "ada1ec4e-b25e-4a40-bf01-390cc10446db",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{token}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {\n        \"text\": \"{message}\",\n        \"message_type\": \"text\",\n        \"method\": \"one_way\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
+					},
+					"response": []
+				},
+				{
+					"name": "Session Image",
+					"id": "b2e17eb3-caac-45b7-a710-34e079066f1f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{token}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"phone\": \"{mobile with country code}\",\n\t\"img\": \"{image link with https:// with extension}\",\n    \"ttl\" : {time in seconds},\n\t\"message_type\": \"image\",\n\t\"method\": \"session\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://apis.rmlconnect.net/vbs/api/v2/send"
+					},
+					"response": []
+				},
+				{
+					"name": "Campaign Image",
+					"id": "81de8494-76cc-4233-bc40-0437c7ebcacc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{token}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"campaign_id\": \"{campaign id generated post file upload}\",\n    \"campaign_action\": \"start\",\n    \"campaign_name\": \"{campaign name}\",\n    \"ttl\" : {time in seconds},\n    \"file_mimetype\": \"text/plain\",\n    \"filename\": \"{filename with extension}\",\n    \"payload\": {       \n        \"img\": \"{Public URL starting with http:// and ending with file extension}\",\n        \"message_type\": \"image\",\n        \"method\": \"session\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://apis.rmlconnect.net/vbs/api/v2/manage-campaign"
+					},
+					"response": []
+				}
+			],
+			"id": "099e1d69-20bd-4219-a16a-01e066b2dbc1"
+		},
+		{
+			"name": "Callback",
+			"item": [
+				{
+					"name": "Incoming Text",
+					"id": "27fcae32-b809-4baf-95da-52ea22786ef5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{token}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"phone_number\":\"972512222222\",\n   \"time\":2121212121,\n   \"message\":{\n      \"text\":\"a message to the sender\",\n      \"tracking_data\":\"tracking_id:100035\"\n   },\n   \"service_type\":\"two_way/session\",\n   \"request_id\":\"70d9758e-70ef-11eb-b813-a81e84a88e45\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{client callback}"
+					},
+					"response": []
+				},
+				{
+					"name": "Incoming Image/Video",
+					"id": "80138665-3a36-4a9d-b978-e57accc6774b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{token}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phone_number\":\"919987772222\",\n    \"time\":1622014595,\n    \"message\":{\n                \"tracking_data\":\"1361351180demo919987772222\",\n                \"media\":\"https://dl-media.viber.com/3/media/2/short/any/sig/image/0x0/8e78/c879\",\n                \"file_name\":\"1622014593480618.jpg\"\n              },\n    \"service_type\":\"two_way/session\",\n    \"request_id\":\"1a761762-bdf5-11eb-aa2f-0242ac120007\"\n  }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{client callback}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delivery Report",
+					"id": "a8338730-1412-48bb-868d-3f03689a9981",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{token}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"message_status\":\"delivered/seen/expired/subscribe/unsubscribe\",\n   \"message_time\":1499163009878,\n   \"phone_number\":\"972518900007\",\n   \"service_type\":\"one_way/two_way/session\",\n   \"request_id\":\"a4a3bbf0-14ff-11eb-9acf-0242ac1a0008\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{client callback}"
+					},
+					"response": []
+				}
+			],
+			"id": "d98da80a-a810-47ef-9d16-9d4d497b0472"
+		},
+		{
+			"name": "Login",
+			"id": "175f2018-2228-400b-93b5-75f30dc99f36",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\":\"{usename}\",\r\n  \"password\":\"{password}\"\r\n}\r\n"
+				},
+				"url": "https://apis.rmlconnect.net/auth/v1/login/"
+			},
+			"response": []
+		},
+		{
+			"name": "Campaign File Upload",
+			"id": "11eed310-f0b6-492e-9909-86ac9bfc6e01",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{token}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/RmlPro_Deeksha/Desktop/Testing/test not a viber user.txt"
+						},
+						{
+							"key": "file_mimetype",
+							"value": "text/csv",
+							"type": "text"
+						},
+						{
+							"key": "file_mimetype",
+							"value": "application/vnd.ms-excel",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "file_mimetype",
+							"value": "text/plain",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "file_mimetype",
+							"value": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": "https://apis.rmlconnect.net/vbs/api/v2/upload"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c7c0ef1d-46e7-4749-a360-506f3484c9c8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0fc49263-2801-49d6-aaaa-3db47412db2c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
 }

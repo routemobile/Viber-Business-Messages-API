@@ -96,6 +96,11 @@
 			"id": "d98da80a-a810-47ef-9d16-9d4d497b0472"
 		},
 		{
+			"name": "New Folder",
+			"item": [],
+			"id": "8ef93295-aa0d-4ab7-9f66-395488702587"
+		},
+		{
 			"name": "Login",
 			"id": "175f2018-2228-400b-93b5-75f30dc99f36",
 			"protocolProfileBehavior": {

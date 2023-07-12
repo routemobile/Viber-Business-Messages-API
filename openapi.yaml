@@ -1,0 +1,1581 @@
+openapi: 3.0.0
+info:
+  version: 1.5.0
+  title: Route Mobile Viber OpenAPI Specification
+  description: >-
+    Welcome to the Route Mobile developer hub. You'll find comprehensive Viber
+    API documentation to help you start working with Route Mobile as quickly as
+    possible, as well as support if you get stuck. Let's jump right in!
+  contact:
+    url: https://developers.routemobile.com/
+    name: Route Mobile Development
+servers:
+  - url: https://apis.rmlconnect.net
+  - url: '{client callback}'
+paths:
+  /callback:
+    post:
+      tags:
+        - Viber Client Callback API
+      summary: Viber Client Callback
+      description: >-
+        Viber Client Callback APIs allow you to receive real-time notifications
+        for events that occur on your Viber Business Messaging account. These
+        callbacks are triggered by events that occur on the Viber server, and
+        are delivered to a URL that you specify in your webhook configuration.
+      operationId: viberClientCallback
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/vbs_callback_incoming_text'
+                - $ref: '#/components/schemas/vbs_callback_incoming_videoimage'
+                - $ref: '#/components/schemas/vbs_callback_delivery_report'
+            examples:
+              Incoming Text:
+                value:
+                  phone_number: 972512222xxx
+                  time: 2121212121
+                  message:
+                    text: a message to the sender
+                    tracking_data: tracking_id:100xxx5
+                  service_type: two_way/session
+                  request_id: 70d9758e-70ef-11eb-b813-a81e84xxxxxx
+              Incoming Image/video:
+                value:
+                  phone_number: '{phone number with country code}'
+                  time: 1622014595
+                  message:
+                    tracking_data: '{tracking id}'
+                    media: '{media url}'
+                    file_name: '{filename with extension}'
+                  service_type: two_way/session
+                  request_id: 1a761762-bdf5-11eb-aa2f-0242acxxxxxx
+              Delivery Report:
+                value:
+                  message_status: delivered/seen/expired/subscribe/unsubscribe
+                  message_time: 1499163009878
+                  phone_number: 97251890xxxx
+                  service_type: one_way/two_way/session
+                  request_id: a4a3bbf0-14ff-11eb-9acf-0242acxxxxxx
+      responses:
+        '200':
+          description: Success
+      security:
+        - jwt: []
+      servers:
+        - url: https://apis.rmlconnect.net
+        - url: '{client callback}'
+  /auth/v1/login/:
+    post:
+      tags:
+        - Viber Login
+      summary: Login API
+      description: >-
+        Login APIs provide a secure and standardized way for end users to add
+        user authentication to their applications. Only authorized users can
+        access sensitive resources or perform specific actions within the
+        application after entering the user authentication details.
+
+
+        **By default, the JSON Web Token (JWT) validity periods are set to one
+        hour.**
+      operationId: loginApi2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1_login_body'
+            examples:
+              Example 1:
+                value:
+                  password: password
+                  username: username
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_2'
+              examples:
+                Authentication successful:
+                  value:
+                    JWTAUTH: >-
+                      eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZGVtbyIsInVzZXJuYW1lIjoiZGVtbyIsImV4cCI6MTY4Mzg4OTI0MSwiZW1haWwiOiJwcm9kdxxxxxxxxxxAcm91dGVtb2JpbGUuY29tIiwib3JpZ19pYXQiOjE2ODM4ODU2NDEsImN1c3RvbWVyX2lkIjoiOWlyNURnN2J2c0NBIn0.gu2LO-bDVPqa35v_MnyO1KKeZzhxxxxxxxxxxxxxxxx
+                    user_data:
+                      username: demo
+                      first_name: user
+                      last_name: name
+                      email: user_name@orgdomain.com
+                      phone_number: +91989876xxxx
+                      password_reset: false
+                      is_active: true
+                      is_staff: false
+                      ip: 1stepauxx
+                      child_user: false
+                      parent_username: ''
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The user login status.
+              examples:
+                User is set inactive:
+                  value:
+                    status: invalid credentials or the account has been deactivated
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The user login status.
+              examples:
+                Unhandled Exception:
+                  value:
+                    status: <exception>
+      servers:
+        - url: https://apis.rmlconnect.net
+        - url: '{client callback}'
+  /vbs/api/v2/send:
+    post:
+      tags:
+        - Viber Business Messaging API
+      summary: Viber Send Single Messages APIs
+      description: >-
+        Viber Business Send Messages APIs allow businesses to send types of
+        messages to their users on the Viber platform. These APIs enable
+        businesses to engage with their customers, deliver personalized content,
+        and provide interactive experiences through Viber's messaging platform.
+
+
+        Here are some key Viber Business Send Single Message APIs:
+
+
+        - **Single Text Button Image:** Send a single message with text, a
+        button, and an image to a recipient. 
+
+        - **Single Text Button:** Send a single text message with a button to a
+        recipient. 
+
+        - **Single Text:** Send a single text message to a recipient without any
+        additional elements such as buttons, images, or videos.
+
+        - **Single Image:** Send a single image message to a recipient. 
+
+        - **Single File:** Send a single file message to a recipient. 
+
+        - **Single Video:** Send a single video message to a recipient. 
+
+        - **Single Video Text:** Send a single message with text and a video to
+        a recipient. 
+      operationId: singleVideoText
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/vbs_single_textbuttonimg_msg'
+                - $ref: '#/components/schemas/vbs_single_textbutton_msg'
+                - $ref: '#/components/schemas/vbs_single_text_msg'
+                - $ref: '#/components/schemas/vbs_single_image_msg'
+                - $ref: '#/components/schemas/vbs_single_file_msg'
+                - $ref: '#/components/schemas/vbs_single_video_msg'
+                - $ref: '#/components/schemas/vbs_single_videotext_msg'
+            examples:
+              Single Text Button Image:
+                value:
+                  phone: '{mobile with country code}'
+                  text: '{text}'
+                  button_text: '{button text}'
+                  button_link: '{button link with https://}'
+                  img: '{image link with https:// with extension}'
+                  ttl: '{time in seconds}'
+                  message_type: template
+                  method: one_way/two_way
+              Single Text Button:
+                value:
+                  phone: '{mobile with country code}'
+                  text: '{text}'
+                  button_text: '{button text}'
+                  button_link: '{button link with https://}'
+                  message_type: media
+                  method: one_way/two_way
+              Single Text:
+                value:
+                  phone: '{mobile with country code}'
+                  text: '{text}'
+                  message_type: text
+                  method: one_way/two_way/session
+              Single Image:
+                value:
+                  phone: '{mobile with country code}'
+                  img: '{image link with https:// with extension}'
+                  ttl: '{time in seconds}'
+                  message_type: image
+                  method: two_way/session
+              Single File:
+                value:
+                  phone: '{mobile with country code }'
+                  message_type: file
+                  method: two_way/session
+                  ttl: '{time in seconds}'
+                  file_url: '{file link with https:// with extension}'
+                  file_name: test
+              Single Video:
+                value:
+                  phone: '{mobile with country code}'
+                  message_type: video
+                  method: two_way
+                  ttl: '{time in seconds}'
+                  video: '{video link with https:// with extension'
+                  thumbnail_url: '{image link with https:// with extension}'
+              Single Video Text:
+                value:
+                  phone: '{mobile with country code}'
+                  video: '{video link with https:// with extension}'
+                  text: '{body text}'
+                  ttl: '{time in seconds}'
+                  message_type: text_video
+                  method: two_way
+          application/xml:
+            schema:
+              type: object
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message delivery.
+                  message:
+                    type: string
+                    description: The response message.
+                  request_id:
+                    type: string
+                    description: A unique identifier for the request.
+              examples:
+                Successful API execution:
+                  value:
+                    status: success
+                    message: Api execution is successful
+                    request_id: 727591b0-e592-11ed-91d7-0242ac13xxxx
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/vbs_400_invalid_phone_number'
+                  - $ref: '#/components/schemas/vbs_400_invalid_text_msg'
+                  - $ref: '#/components/schemas/vbs_400_invalid_button_text'
+                  - $ref: '#/components/schemas/vbs_400_invalid_button_link'
+                  - $ref: '#/components/schemas/vbs_400_invalid_image_url'
+                  - $ref: '#/components/schemas/vbs_400_invalid_time_duration'
+                  - $ref: '#/components/schemas/vbs_400_incorrect_message_type'
+                  - $ref: '#/components/schemas/vbs_400_incorrect_message_method'
+                  - $ref: '#/components/schemas/vbs_400_invalid_thumbnail_url'
+                  - $ref: '#/components/schemas/vbs_400_unsupported_file_format'
+                  - $ref: '#/components/schemas/vbs_400_unsupported_video_file'
+                  - $ref: '#/components/schemas/vbs_400_campaign_short_name'
+              examples:
+                Invalid phone number:
+                  value:
+                    error:
+                      - phone - Please provide valid phone no.
+                Invalid text message:
+                  value:
+                    error:
+                      - text - Length must be between 1 and 1000.
+                Invalid button text:
+                  value:
+                    error:
+                      - button_text - Length must be between 1 and 30.
+                Invalid button link:
+                  value:
+                    error:
+                      - button_link - Not a valid URL.
+                Invalid image URL:
+                  value:
+                    error:
+                      - img - Not a valid URL.
+                Invalid time duration criteria:
+                  value:
+                    error:
+                      - >-
+                        ttl - Must be greater than or equal to 30 and less than
+                        or equal to 1209600.
+                Incorrect message type:
+                  value:
+                    status: failed
+                    message: Api execution not successful
+                    details: Please provide message type
+                Incorrect message method:
+                  value:
+                    error:
+                      - 'method - Must be one of: one_way, two_way, session.'
+                Invalid thumbnail URL:
+                  value:
+                    error:
+                      - thumbnail_url - Not a valid URL.
+                Unsupported file format:
+                  value:
+                    error:
+                      - file_url - File format not supported
+                Unsupported video file format:
+                  value:
+                    error:
+                      - video - Video format not supported
+                Campaign name is too short:
+                  value:
+                    error:
+                      - campaign_name - Shorter than minimum length 3.
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    description: Unauthorized access.
+              examples:
+                'Unauthorized ':
+                  value:
+                    response: Unauthorized
+        '404':
+          description: Page Not Found
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The message response.
+              examples:
+                Not found:
+                  value: >-
+                    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+                    <title>404 Not Found</title> <h1>Not Found</h1> <p>The
+                    requested URL was not found on the server. If you entered
+                    the URL manually please check your spelling and try
+                    again.</p>
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the message.
+                  message:
+                    type: string
+                    description: The response message.
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+        - jwt: []
+      servers:
+        - url: https://apis.rmlconnect.net
+        - url: '{client callback}'
+  /vbs/api/v2/manage-campaign:
+    post:
+      tags:
+        - Viber Business Messaging API
+      summary: Viber Send Campaign Messages APIs
+      description: >
+        Viber Business Send Campaign Messages APIs allow businesses to send
+        campaign messages to their users on the Viber platform. These APIs
+        enable businesses to engage with their customers, deliver personalized
+        content, and provide interactive experiences through Viber's messaging
+        platform.
+
+
+        Here are some key Viber Business Send Campaign Messages APIs:
+
+        - **Campaign Text Button Image:** Send a campaign message with text, a
+        button, and an image to multiple recipients.
+
+        - **Campaign Text Button:** Send a campaign message with a text and a
+        button to multiple recipients.
+
+        - **Campaign Text:** Send a campaign message with a single text to
+        multiple recipients. 
+
+        - **Campaign Image:** Send a campaign message with an image to multiple
+        recipients.
+
+        - **Campaign File:** Send a campaign message with a file attachment to
+        multiple recipients.
+
+        - **Campaign Video:** Send a campaign message with a video to multiple
+        recipients.
+
+        - **Campaign Video Text:** Send a campaign message with text and a video
+        to multiple recipients.
+      operationId: campaignVideoText
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/vbs_campaign_text_button_image'
+                - $ref: '#/components/schemas/vbs_campaign_text_button'
+                - $ref: '#/components/schemas/vbs_campaign_text_msg'
+                - $ref: '#/components/schemas/vbs_campaign_image_msg'
+                - $ref: '#/components/schemas/vbs_campaign_file_msg'
+                - $ref: '#/components/schemas/vbs_campaign_video_msg'
+                - $ref: '#/components/schemas/vbs_campaign_video_text_msg'
+            examples:
+              Campaign Text Button Image:
+                value:
+                  campaign_id: '{campaign id generated post file upload}'
+                  campaign_action: start
+                  campaign_name: '{campaign name}'
+                  ttl: '{time in seconds}'
+                  file_mimetype: text/plain
+                  filename: '{filename with extension}'
+                  payload:
+                    text: '{Message}'
+                    button_text: '{button name}'
+                    button_link: '{button url with https://}'
+                    img: >-
+                      {Public URL starting with http:// and ending with file
+                      extension}
+                    message_type: template
+                    method: one_way/two_way
+              Campaign Text Button:
+                value:
+                  campaign_id: '{campaign id generated post file upload}'
+                  campaign_action: start
+                  campaign_name: '{campaign name}'
+                  ttl: '{time in seconds}'
+                  file_mimetype: text/plain
+                  filename: '{filename with extension}'
+                  payload:
+                    text: '{message}'
+                    button_text: '{button name}}'
+                    button_link: '{button url starting https://}'
+                    message_type: media
+                    method: one_way/two_way
+              Campaign Text:
+                value:
+                  campaign_id: '{campaign id generated post file upload}'
+                  campaign_action: start
+                  campaign_name: '{campaign name}'
+                  ttl: '{time in seconds}'
+                  file_mimetype: text/plain
+                  filename: '{filename with extension}'
+                  payload:
+                    text: '{message}'
+                    button_text: '{button name}}'
+                    button_link: '{button url starting https://}'
+                    message_type: media
+                    method: one_way/two_way
+              Campaign Image:
+                value:
+                  campaign_id: '{campaign id generated post file upload}'
+                  campaign_action: start
+                  campaign_name: '{campaign name}'
+                  ttl: '{time in seconds}'
+                  file_mimetype: text/plain
+                  filename: '{filename with extension}'
+                  payload:
+                    img: >-
+                      {Public URL starting with http:// and ending with file
+                      extension}
+                    message_type: image
+                    method: two_way/session
+              Campaign File:
+                value:
+                  campaign_id: '{campaign id generated post file upload}'
+                  campaign_action: start
+                  campaign_name: '{campaign name}'
+                  ttl: '{time in seconds}'
+                  file_mimetype: text/plain
+                  filename: '{filename with extension}'
+                  payload:
+                    file: >-
+                      {Public URL starting with http:// and ending with file
+                      extension}
+                    message_type: file
+                    method: two_way/session
+              Campaign Video:
+                value:
+                  campaign_id: '{campaign id generated post file upload}'
+                  campaign_action: start
+                  campaign_name: '{campaign name}'
+                  ttl: '{time in seconds}'
+                  file_mimetype: text/plain
+                  filename: '{filename with extension}'
+                  payload:
+                    video: >-
+                      {Public URL starting with http:// and ending with file
+                      extension}
+                    message_type: video
+                    thumbnail_url: '{image link with https:// with extension}'
+                    method: two_way
+              Campaign Video Text:
+                value:
+                  campaign_id: '{campaign id generated post file upload}'
+                  campaign_action: start
+                  campaign_name: '{campaign name}'
+                  ttl: '{time in seconds}'
+                  file_mimetype: text/plain
+                  filename: '{filename with extension}'
+                  payload:
+                    video: >-
+                      {Public URL starting with http:// and ending with file
+                      extension}
+                    message_type: video
+                    thumbnail_url: '{image link with https:// with extension}'
+                    text: '{body text}'
+                    method: two_way
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the campaign message delivery.
+                  message:
+                    type: string
+                    description: The response message.
+              examples:
+                Campaign is in process:
+                  value:
+                    status: success
+                    message: >-
+                      campaign with id ce078410-e593-11ed-9242-0242ac11xxxx is
+                      now processing
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/vbs_400_campaign_short_name'
+                  - $ref: '#/components/schemas/vbs_400_invalid_text_msg'
+                  - $ref: '#/components/schemas/vbs_400_invalid_button_text'
+                  - $ref: '#/components/schemas/vbs_400_invalid_time_duration'
+                  - $ref: '#/components/schemas/vbs_400_incorrect_message_type'
+                  - $ref: '#/components/schemas/vbs_400_incorrect_message_method'
+                  - $ref: '#/components/schemas/vbs_400_invalid_thumbnail_url'
+              examples:
+                Campaign name is too short:
+                  value:
+                    error:
+                      - campaign_name - Shorter than minimum length 3.
+                Invalid text message:
+                  value:
+                    error:
+                      - text - Length must be between 1 and 1000.
+                Invalid button text:
+                  value:
+                    error:
+                      - button_text - Length must be between 1 and 30.
+                Invalid time duration criteria:
+                  value:
+                    error:
+                      - >-
+                        ttl - Must be greater than or equal to 30 and less than
+                        or equal to 1209600.
+                Incorrect message type:
+                  value:
+                    status: failed
+                    message: Api execution not successful
+                    details: Please provide message type
+                Incorrect message method:
+                  value:
+                    error:
+                      - 'method - Must be one of: one_way, two_way, session.'
+                'Invalid thumbnail URL ':
+                  value:
+                    error:
+                      - thumbnail_url - Not a valid URL.
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    description: The response message.
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '404':
+          description: Page Not Found
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The message response.
+              examples:
+                Not found:
+                  value: >-
+                    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+                    <title>404 Not Found</title> <h1>Not Found</h1> <p>The
+                    requested URL was not found on the server. If you entered
+                    the URL manually please check your spelling and try
+                    again.</p>
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the send campaign message.
+                  message:
+                    type: string
+                    description: The response message.
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+        - jwt: []
+      servers:
+        - url: https://apis.rmlconnect.net
+        - url: '{client callback}'
+  /vbs/api/v2/upload:
+    post:
+      tags:
+        - Viber Business Messaging API
+      summary: Campaign File Upload
+      description: >-
+        The Campaign File Upload API allows businesses to securely transfer
+        their files to Viber's platform for later use in their campaigns.
+
+
+        When businesses want to include media files such as images, videos,
+        audio files, or other types of files in their Viber campaigns, they need
+        to upload those files to Viber's servers. 
+      operationId: campaignFileUpload
+      requestBody:
+        description: >
+          The file could be sent as part of a multipart/form-data request or
+          through other supported methods specified by Viber.
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                File:
+                  type: string
+                  description: 'The name of the file with extension. '
+                File_mimetype:
+                  type: string
+                  description: >-
+                    The MIME type of the content file. For example, text/plain,
+                    text/csv
+                  example: text/csv
+            examples:
+              Example 1:
+                value:
+                  File: <file_content>
+                  File_mimetype: <file_mimetype>
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  campaign_id:
+                    type: string
+                    description: The ID of the campaign.
+                  file_type:
+                    type: string
+                    description: The file type.
+                  file_size:
+                    type: string
+                    description: "The size of the file.\r\n"
+                  total_records:
+                    type: integer
+                    description: Total records in the file.
+                  duplicate_records:
+                    type: integer
+                    description: Duplicate records in the file.
+                  valid_records:
+                    type: integer
+                    description: Valid records in the file.
+              examples:
+                Example 1:
+                  value:
+                    message: File uploaded successfully
+                    campaign_id: f8bc9ddc-f3e7-11ed-9242-0242acxxxxxx
+                    file_type: application/vnd.ms-excel
+                    file_size: 5.5KB
+                    total_records: 2
+                    duplicate_records: 0
+                    valid_records: 2
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  reason:
+                    type: string
+                    description: The reason for not processing the upload request.
+                  status:
+                    type: string
+                    description: The status of the file upload.
+              examples:
+                JWT Token Expired:
+                  value:
+                    message: unable to process campaign request
+                    reason: jwt token expired
+                    status: failure
+        '404':
+          description: Page Not Found
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: 'The message response. '
+              examples:
+                Not Found:
+                  value: >-
+                    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+                    <title>404 Not Found</title> <h1>Not Found</h1> <p>The
+                    requested URL was not found on the server. If you entered
+                    the URL manually please check your spelling and try
+                    again.</p>
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the file upload.
+                  message:
+                    type: string
+                    description: The response message.
+              examples:
+                Server Error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+        - jwt: []
+      servers:
+        - url: https://apis.rmlconnect.net
+        - url: '{client callback}'
+tags:
+  - name: Viber Login
+    description: Login to Viber Business messaging APIs.
+  - name: Viber Client Callback API
+    description: Types of Viber client callback APIs.
+  - name: Viber Business Messaging API
+    description: Types of Viber Business messaging APIs.
+
+components:
+  securitySchemes:
+    jwt:
+      type: apiKey
+      name: Authorization
+      in: header
+  schemas:
+    vbs_callback_incoming_text:
+      type: object
+      title: Incoming Text
+      properties:
+        phone_number:
+          type: string
+          description: "The phone number of the user who sent the text message.\r\n"
+        time:
+          type: integer
+          description: "The timestamp when the message was sent.\r\n"
+        message:
+          type: object
+          description: The message object.
+          properties:
+            text:
+              type: string
+              description: The text message sent by the user.
+            tracking_data:
+              type: string
+              description: The tracking data associated with the message.
+        service_type:
+          type: string
+          description: "The type of service that the Viber Business Account supports.\r\n"
+        request_id:
+          type: string
+          description: "A unique identifier for the request.\r\n"
+    vbs_callback_incoming_videoimage:
+      type: object
+      title: Incoming Image or Video
+      properties:
+        phone_number:
+          type: string
+          description: "The phone number of the user who sent the text message.\r\n"
+        time:
+          type: integer
+          description: "The timestamp when the message was sent.\r\n"
+        message:
+          type: object
+          description: The message object.
+          properties:
+            tracking_data:
+              type: string
+              description: The tracking data associated with the message.
+            media:
+              type: string
+              description: The URL of the image or video file.
+            file_name:
+              type: string
+              description: The name of the file, including the extension.
+        service_type:
+          type: string
+          description: "The type of service that the Viber Business Account supports.\r\n"
+        request_id:
+          type: string
+          description: "A unique identifier for the request.\r\n"
+    vbs_callback_delivery_report:
+      type: object
+      title: Delivery Report
+      properties:
+        message_status:
+          type: string
+          description: "The status of the message. Possible values are delivered, seen, expired, subscribe, or unsubscribe.\r\n"
+        message_time:
+          type: integer
+          description: "The Unix timestamp when the message status was updated.\r\n"
+        phone_number:
+          type: string
+          description: "The phone number (with country code) of the recipient of the message.\r\n"
+        service_type:
+          type: string
+          description: "The type of Viber service being used. Possible values are one_way, two_way, or session.\r\n"
+        request_id:
+          type: string
+          description: "A unique identifier for the request.\r\n"
+    v1_login_body:
+      type: object
+      properties:
+        password:
+          type: string
+          description: >-
+            The secret code that users provide to the application during the
+            login process.
+          example: password
+        username:
+          type: string
+          description: >-
+            Unique identifier that users provide to the application during the
+            login process. Usernames can be any string of characters.
+          example: username
+      required:
+        - password
+        - username
+    inline_response_201_2:
+      type: object
+      properties:
+        JWTAUTH:
+          type: string
+          description: JSON Web Token Authentication
+        user_data:
+          $ref: '#/components/schemas/inline_response_201_2_user_data'
+    inline_response_201_2_user_data:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The name of the user.
+        first_name:
+          type: string
+          description: The first name of the user.
+        last_name:
+          type: string
+          description: The last name of the user.
+        email:
+          type: string
+          description: The email address of the user.
+        phone_number:
+          type: string
+          description: The user phone number in international format.
+        password_reset:
+          type: boolean
+          description: Indicates whether the password reset.
+        is_active:
+          type: boolean
+          description: Checks if the user is active.
+        is_staff:
+          type: boolean
+          description: Checks if the user is a staff.
+        ip:
+          type: string
+          description: The IP address of the user.
+        child_user:
+          type: boolean
+          description: Indicates if user is a child.
+        parent_username:
+          type: string
+          description: The user of child's parent.
+    vbs_single_textbuttonimg_msg:
+      type: object
+      title: Single Text Button Image
+      description: >-
+        Send a single message with text, a button, and an image to a recipient.
+        You can specify the text, button text, button link, and image URL.
+      properties:
+        phone:
+          type: string
+          description: "The recipient's phone number in international format, including the country code.\r\n"
+        text:
+          type: string
+          description: "The text to display in the message.\r\n"
+        button_text:
+          type: string
+          description: "The text to display on the button that accompanies the message.\r\n"
+        button_link:
+          type: string
+          description: The URL to include in the button.
+        img:
+          type: string
+          description: >-
+            The URL of the image file, hosted publicly and starting with
+            "https://" and ending with the file extension, such as ".png".
+        ttl:
+          type: string
+          description: The time-to-live (TTL) of the message in seconds.
+        message_type:
+          type: string
+          description: >-
+            The type of the message. In this case, it should be set to
+            "template".
+        method:
+          type: string
+          description: "The method of sending the message. It can be set to either \"one_way\" or \"two_way\". If set to \"one_way\", the recipient will not be able to reply to the message. If set to \"two_way\", the recipient will be able to reply to the message.\r\n"
+    vbs_single_textbutton_msg:
+      type: object
+      title: Single Text Button
+      description: >-
+        Send a single text message with a button to a recipient. The button can
+        have a custom text and a URL link.
+      properties:
+        phone:
+          type: string
+          description: >-
+            The recipient's phone number in international format, including the
+            country code.
+        text:
+          type: string
+          description: The text to display in the message.
+        button_text:
+          type: string
+          description: The text to display on the button that accompanies the message.
+        button_link:
+          type: string
+          description: The URL to include in the button.
+        message_type:
+          type: string
+          description: "The type of the message. In this case, it should be set to \"media\".\r\n"
+        method:
+          type: string
+          description: "The method of sending the message. It can be set to either \"one_way\" or \"two_way\". If set to \"one_way\", the recipient will not be able to reply to the message. If set to \"two_way\", the recipient will be able to reply to the message.\r\n"
+    vbs_single_text_msg:
+      type: object
+      title: Single Text
+      description: >-
+        Send a single text message to a recipient without any additional
+        elements such as buttons, images, or videos.
+      properties:
+        phone:
+          type: string
+          description: >-
+            The recipient's phone number in international format, including the
+            country code.
+        text:
+          type: string
+          description: "The text to display in the message.\r\n"
+        message_type:
+          type: string
+          description: "The type of the message. In this case, it should be set to \"text\".\r\n"
+        method:
+          type: string
+          description: "The method of sending the message. It can be set to either \"one_way\" or \"two_way\". If set to \"one_way\", the recipient will not be able to reply to the message. If set to \"two_way\", the recipient will be able to reply to the message.\r\n"
+    vbs_single_image_msg:
+      type: object
+      title: Single Image
+      description: >-
+        Send a single image message to a recipient. You can specify the URL of
+        the image to be displayed in the message.
+      properties:
+        phone:
+          type: string
+          description: "The recipient's phone number in international format, including the country code.\r\n"
+        img:
+          type: string
+          description: "The URL of the image file, hosted publicly and starting with \"https://\" and ending with the file extension, such as \".png\".\r\n"
+        ttl:
+          type: string
+          description: "The time-to-live (TTL) of the message in seconds.\r\n"
+        message_type:
+          type: string
+          description: 'The type of the message. '
+        method:
+          type: string
+          description: "The method of sending the message. It can be set to either \"two_way\" or \"session\". If set to \"two_way\", the recipient will be able to reply to the message. If set to \"session\", the recipient will be able to respond to multiple interactions in the session chat bot.\r\n"
+    vbs_single_file_msg:
+      type: object
+      title: Single File
+      description: >-
+        Send a single file message to a recipient. You can upload a file and
+        specify its URL to be sent as a message attachment.
+      properties:
+        phone:
+          type: string
+          description: >-
+            The recipient's phone number in international format, including the
+            country code.
+        message_type:
+          type: string
+          description: The type of the message. In this case, it should be set to "file".
+        method:
+          type: string
+          description: "The method of sending the message. It can be set to either \"two_way\" or \"session\". If set to \"two_way\", the recipient will be able to reply to the message. If set to \"session\", the recipient will be able to respond to multiple interactions in the session chat bot.\r\n"
+        ttl:
+          type: string
+          description: "The time-to-live (TTL) of the message in seconds.\r\n"
+        file_url:
+          type: string
+          description: >-
+            The URL of the document file, hosted publicly and starting with
+            "https://" and ending with the file extension.
+        file_name:
+          type: string
+          description: "The name of the file.\r\n"
+    vbs_single_video_msg:
+      type: object
+      title: Single Video
+      description: >-
+        Send a single video message to a recipient. You can specify the URL of
+        the video to be displayed in the message.
+      properties:
+        phone:
+          type: string
+          description: "The recipient's phone number in international format, including the country code.\r\n"
+        message_type:
+          type: string
+          description: "The type of the message. In this case, it should be set to \"video\".\r\n"
+        method:
+          type: string
+          description: "The method of sending the message. If set to \"two_way\", the recipient will be able to reply to the message.\r\n"
+        ttl:
+          type: string
+          description: "The time-to-live (TTL) of the message in seconds.\r\n"
+        video:
+          type: string
+          description: "The URL of the video file, hosted publicly and starting with \"https://\" and ending with the file extension, such as \".mp4\".\r\n"
+        thumbnail_url:
+          type: string
+          description: >-
+            The thumbnail image URL of the video file, hosted publicly and
+            starting with "https://" and ending with the file extension.
+    vbs_single_videotext_msg:
+      type: object
+      title: Single Video Text
+      description: >-
+        Send a single message with text and a video to a recipient. You can
+        specify the text and the URL of the video to be displayed in the
+        message.
+      properties:
+        phone:
+          type: string
+          description: "The recipient's phone number in international format, including the country code.\r\n"
+        video:
+          type: string
+          description: "The URL of the video file, hosted publicly and starting with \"https://\" and ending with the file extension, such as \".mp4\".\r\n"
+        text:
+          type: string
+          description: "The text in the message.\r\n"
+        ttl:
+          type: string
+          description: "The time-to-live (TTL) of the message in seconds.\r\n"
+        message_type:
+          type: string
+          description: "The type of the message. In this case, it should be set to \"video\".\r\n"
+        method:
+          type: string
+          description: "The method of sending the message. If set to \"two_way\", the recipient will be able to reply to the message.\r\n"
+    vbs_400_invalid_phone_number:
+      type: object
+      title: Invalid Phone Number
+      properties:
+        error:
+          type: array
+          description: Invalid phone number.
+          items:
+            type: string
+    vbs_400_invalid_text_msg:
+      type: object
+      title: Invalid text message
+      properties:
+        error:
+          type: array
+          description: Invalid text message.
+          items:
+            type: string
+    vbs_400_invalid_button_text:
+      type: object
+      title: Invalid button text
+      properties:
+        error:
+          type: array
+          description: Invalid button text.
+          items:
+            type: string
+    vbs_400_invalid_button_link:
+      type: object
+      title: Invalid button link
+      properties:
+        error:
+          type: array
+          description: Invalid button link.
+          items:
+            type: string
+    vbs_400_invalid_image_url:
+      type: object
+      title: Invalid image url
+      properties:
+        error:
+          type: array
+          description: Invalid image url.
+          items:
+            type: string
+    vbs_400_invalid_time_duration:
+      type: object
+      title: Invalid time duration criteria
+      properties:
+        error:
+          type: array
+          description: Invalid time duration criteria.
+          items:
+            type: string
+    vbs_400_incorrect_message_type:
+      type: object
+      title: Incorrect message type
+      properties:
+        status:
+          type: string
+          description: The status of the message.
+        message:
+          type: string
+          description: The response message.
+        details:
+          type: string
+          description: The message details.
+    vbs_400_incorrect_message_method:
+      type: object
+      title: Incorrect message method
+      properties:
+        error:
+          type: array
+          description: Incorrect message method.
+          items:
+            type: string
+    vbs_400_invalid_thumbnail_url:
+      type: object
+      title: Invalid thumbnail URL
+      properties:
+        error:
+          type: array
+          description: Invalid thumbnail URL.
+          items:
+            type: string
+    vbs_400_unsupported_file_format:
+      type: object
+      title: Unsupported file format
+      properties:
+        error:
+          type: array
+          description: Unsupported file format.
+          items:
+            type: string
+    vbs_400_unsupported_video_file:
+      type: object
+      title: Unsupported video file format
+      properties:
+        error:
+          type: array
+          description: Unsupported video file format.
+          items:
+            type: string
+    vbs_400_campaign_short_name:
+      type: object
+      title: Short campaign name
+      properties:
+        error:
+          type: array
+          description: Campaign name is too short.
+          items:
+            type: string
+    vbs_campaign_text_button_image:
+      type: object
+      title: Campaign Text Button Image
+      properties:
+        campaign_id:
+          type: string
+          description: "The ID of the campaign that was generated after uploading the contact list and campaign content files.\r\n"
+        campaign_action:
+          type: string
+          description: "The action to perform on the campaign. In this case, it is \"start\" to initiate the campaign.\r\n"
+        campaign_name:
+          type: string
+          description: "The name of the campaign.\r\n"
+        ttl:
+          type: string
+          description: "The time-to-live (TTL) value in seconds for the campaign message.\r\n"
+        file_mimetype:
+          type: string
+          description: "The MIME type of the content file. For example, text/plain, text/csv\r\n"
+        filename:
+          type: string
+          description: "The name of the content file with its extension.\r\n"
+        payload:
+          type: object
+          description: The payload of the message.
+          properties:
+            text:
+              type: string
+              description: The message text.
+            button_text:
+              type: string
+              description: The text for the button associated with the message.
+            button_link:
+              type: string
+              description: The link to which the button should redirect.
+            img:
+              type: string
+              description: The URL of the image to be displayed in the message.
+            message_type:
+              type: string
+              description: The type of the message, which is "template".
+            method:
+              type: string
+              description: >-
+                The method of sending the campaign message. It can be set to
+                either "one_way" or "two_way". If set to "one_way", the
+                recipient will not be able to reply to the message. If set to
+                "two_way", the recipient will be able to reply to the message. 
+    vbs_campaign_text_button:
+      type: object
+      title: Campaign Text Button
+      properties:
+        campaign_id:
+          type: string
+          description: "The ID of the campaign that was generated after uploading the contact list and campaign content files.\r\n"
+        campaign_action:
+          type: string
+          description: "The action to perform on the campaign. In this case, it is \"start\" to initiate the campaign.\r\n"
+        campaign_name:
+          type: string
+          description: "The name of the campaign.\r\n"
+        ttl:
+          type: string
+          description: "The time-to-live (TTL) value in seconds for the campaign message.\r\n"
+        file_mimetype:
+          type: string
+          description: "The MIME type of the content file. For example, text/plain, text/csv\r\n"
+        filename:
+          type: string
+          description: "The name of the content file with its extension.\r\n"
+        payload:
+          type: object
+          description: The payload of the message.
+          properties:
+            text:
+              type: string
+              description: The message text.
+            button_text:
+              type: string
+              description: The text for the button associated with the message.
+            button_link:
+              type: string
+              description: The link to which the button should redirect.
+            message_type:
+              type: string
+              description: The type of the message, which is "media".
+            method:
+              type: string
+              description: >-
+                The method of sending the campaign message. It can be set to
+                either "one_way" or "two_way". If set to "one_way", the
+                recipient will not be able to reply to the message. If set to
+                "two_way", the recipient will be able to reply to the message. 
+    vbs_campaign_text_msg:
+      type: object
+      title: Campaign Text
+      properties:
+        campaign_id:
+          type: string
+          description: "The ID of the campaign that was generated after uploading the contact list and campaign content files.\r\n"
+        campaign_action:
+          type: string
+          description: "The action to perform on the campaign. In this case, it is \"start\" to initiate the campaign.\r\n"
+        campaign_name:
+          type: string
+          description: "The name of the campaign.\r\n"
+        ttl:
+          type: string
+          description: "The time-to-live (TTL) value in seconds for the campaign message.\r\n"
+        file_mimetype:
+          type: string
+          description: "The MIME type of the content file. For example, text/plain, text/csv\r\n"
+        filename:
+          type: string
+          description: "The name of the content file with its extension.\r\n"
+        payload:
+          type: object
+          description: The payload of the message.
+          properties:
+            text:
+              type: string
+              description: The message text.
+            message_type:
+              type: string
+              description: The type of the message.
+            method:
+              type: string
+              description: >-
+                The method of sending the campaign message. It can be set to
+                either "one_way" or "two_way". If set to "one_way", the
+                recipient will not be able to reply to the message. If set to
+                "two_way", the recipient will be able to reply to the message.
+                If set to "session", the recipient will be able to respond to
+                multiple interactions in the session chat bot.
+    vbs_campaign_image_msg:
+      type: object
+      title: Campaign Image
+      properties:
+        campaign_id:
+          type: string
+          description: "The ID of the campaign that was generated after uploading the contact list and campaign content files.\r\n"
+        campaign_action:
+          type: string
+          description: "The action to perform on the campaign. In this case, it is \"start\" to initiate the campaign.\r\n"
+        campaign_name:
+          type: string
+          description: "The name of the campaign.\r\n"
+        ttl:
+          type: string
+          description: "The time-to-live (TTL) value in seconds for the campaign message.\r\n"
+        file_mimetype:
+          type: string
+          description: "The MIME type of the content file. For example, text/plain, text/csv\r\n"
+        filename:
+          type: string
+          description: "The name of the content file with its extension.\r\n"
+        payload:
+          type: object
+          description: The payload of the message.
+          properties:
+            img:
+              type: string
+              description: The URL of the image to be displayed in the message.
+            message_type:
+              type: string
+              description: The type of the message.
+            method:
+              type: string
+              description: >-
+                The method of sending the campaign message. It can be set to
+                either "two_way" or "session". If set to "two_way", the
+                recipient will be able to reply to the message. If set to
+                "session", the recipient will be able to respond to multiple
+                interactions in the session chat bot.
+    vbs_campaign_file_msg:
+      type: object
+      title: Campaign File
+      properties:
+        campaign_id:
+          type: string
+          description: "The ID of the campaign that was generated after uploading the contact list and campaign content files.\r\n"
+        campaign_action:
+          type: string
+          description: "The action to perform on the campaign. In this case, it is \"start\" to initiate the campaign.\r\n"
+        campaign_name:
+          type: string
+          description: "The name of the campaign.\r\n"
+        ttl:
+          type: string
+          description: "The time-to-live (TTL) value in seconds for the campaign message.\r\n"
+        file_mimetype:
+          type: string
+          description: "The MIME type of the content file. For example, text/plain, text/csv\r\n"
+        filename:
+          type: string
+          description: "The name of the content file with its extension.\r\n"
+        payload:
+          type: object
+          description: The payload of the message.
+          properties:
+            file:
+              type: string
+              description: >-
+                The URL of the file, hosted publicly and starting with
+                "https://" and ending with the file extension, such as ".pdf".
+            message_type:
+              type: string
+              description: The type of the message, which is "file".
+            method:
+              type: string
+              description: >-
+                The method of sending the campaign message. It can be set to
+                either "two_way" or "session". If set to "two_way", the
+                recipient will be able to reply to the message. If set to
+                "session", the recipient will be able to respond to multiple
+                interactions in the session chat bot.
+    vbs_campaign_video_msg:
+      type: object
+      title: Campaign Video
+      properties:
+        campaign_id:
+          type: string
+          description: "The ID of the campaign that was generated after uploading the contact list and campaign content files.\r\n"
+        campaign_action:
+          type: string
+          description: "The action to perform on the campaign. In this case, it is \"start\" to initiate the campaign.\r\n"
+        campaign_name:
+          type: string
+          description: "The name of the campaign.\r\n"
+        ttl:
+          type: string
+          description: "The time-to-live (TTL) value in seconds for the campaign message.\r\n"
+        file_mimetype:
+          type: string
+          description: "The MIME type of the content file. For example, text/plain, text/csv\r\n"
+        filename:
+          type: string
+          description: "The name of the content file with its extension.\r\n"
+        payload:
+          type: object
+          description: The payload of the message.
+          properties:
+            video:
+              type: string
+              description: >-
+                The URL of the video file, hosted publicly and starting with
+                "https://" and ending with the file extension, such as ".mp4".
+            message_type:
+              type: string
+              description: The type of the message, which is "video".
+            thumbnail_url:
+              type: string
+              description: >-
+                The thumbnail image URL of the video file, hosted publicly and
+                starting with "https://" and ending with the file extension,
+                such as ".jpg".
+            method:
+              type: string
+              description: >-
+                The method of sending the campaign message. It can be set to
+                either "one_way" or "two_way". If set to "one_way", the
+                recipient will not be able to reply to the message. If set to
+                "two_way", the recipient will be able to reply to the message. 
+    vbs_campaign_video_text_msg:
+      type: object
+      title: Campaign Video Text
+      properties:
+        campaign_id:
+          type: string
+          description: "The ID of the campaign that was generated after uploading the contact list and campaign content files.\r\n"
+        campaign_action:
+          type: string
+          description: "The action to perform on the campaign. \r\n"
+        campaign_name:
+          type: string
+          description: "The name of the campaign.\r\n"
+        ttl:
+          type: string
+          description: "The time-to-live (TTL) value in seconds for the campaign message.\r\n"
+        file_mimetype:
+          type: string
+          description: "The MIME type of the content file. For example, text/plain, text/csv\r\n"
+        filename:
+          type: string
+          description: "The name of the content file with its extension.\r\n"
+        payload:
+          type: object
+          description: The payload of the message.
+          properties:
+            video:
+              type: string
+              description: >-
+                The URL of the video file, hosted publicly and starting with
+                "https://" and ending with the file extension, such as ".mp4".
+            message_type:
+              type: string
+              description: The type of the message, which is "file or video".
+            thumbnail_url:
+              type: string
+              description: >-
+                The thumbnail image URL of the video file, hosted publicly and
+                starting with "https://" and ending with the file extension.
+            text:
+              type: string
+              description: The text in the message.
+            method:
+              type: string
+              description: >-
+                The method of sending the campaign message. It can be set to
+                either "one_way" or "two_way". If set to "one_way", the
+                recipient will not be able to reply to the message. If set to
+                "two_way", the recipient will be able to reply to the message.
+                If set to "session", the recipient will be able to respond to
+                multiple interactions in the session chat bot.

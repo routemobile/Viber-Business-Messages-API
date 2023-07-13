@@ -701,7 +701,11 @@ paths:
               properties:
                 File:
                   type: string
-                  description: 'The name of the file with extension. '
+                  description: 'The name of the file with extension. For more information, see the sample files to upload bulk messages:
+            
+            - [Bulk Upload File](https://github.com/routemobile/Viber-Business-Messages-API/blob/master/Sample%20Bulk%20Upload%20File.txt)
+            
+            - [Bulk Upload Campaign File](https://github.com/routemobile/Viber-Business-Messages-API/blob/master/Sample%20Bulk%20Campaign%20File.csv)'
                 File_mimetype:
                   type: string
                   description: >-
@@ -822,7 +826,6 @@ tags:
     description: Types of Viber client callback APIs.
   - name: Viber Business Messaging API
     description: Types of Viber Business messaging APIs.
-
 components:
   securitySchemes:
     jwt:
@@ -1283,7 +1286,7 @@ components:
           description: "The time-to-live (TTL) value in seconds for the campaign message.\r\n"
         file_mimetype:
           type: string
-          description: "The MIME type of the content file. For example, text/plain, text/csv\r\n"
+          description: "The MIME type of the content file. For example, text/plain, text/csv.\r\n"
         filename:
           type: string
           description: "The name of the content file with its extension.\r\n"
@@ -1331,7 +1334,7 @@ components:
           description: "The time-to-live (TTL) value in seconds for the campaign message.\r\n"
         file_mimetype:
           type: string
-          description: "The MIME type of the content file. For example, text/plain, text/csv\r\n"
+          description: "The MIME type of the content file. For example, text/plain, text/csv.\r\n"
         filename:
           type: string
           description: "The name of the content file with its extension.\r\n"
@@ -1376,7 +1379,7 @@ components:
           description: "The time-to-live (TTL) value in seconds for the campaign message.\r\n"
         file_mimetype:
           type: string
-          description: "The MIME type of the content file. For example, text/plain, text/csv\r\n"
+          description: "The MIME type of the content file. For example, text/plain, text/csv.\r\n"
         filename:
           type: string
           description: "The name of the content file with its extension.\r\n"
@@ -1417,7 +1420,7 @@ components:
           description: "The time-to-live (TTL) value in seconds for the campaign message.\r\n"
         file_mimetype:
           type: string
-          description: "The MIME type of the content file. For example, text/plain, text/csv\r\n"
+          description: "The MIME type of the content file. For example, text/plain, text/csv.\r\n"
         filename:
           type: string
           description: "The name of the content file with its extension.\r\n"
@@ -1457,7 +1460,7 @@ components:
           description: "The time-to-live (TTL) value in seconds for the campaign message.\r\n"
         file_mimetype:
           type: string
-          description: "The MIME type of the content file. For example, text/plain, text/csv\r\n"
+          description: "The MIME type of the content file. For example, text/plain, text/csv.\r\n"
         filename:
           type: string
           description: "The name of the content file with its extension.\r\n"
@@ -1499,7 +1502,7 @@ components:
           description: "The time-to-live (TTL) value in seconds for the campaign message.\r\n"
         file_mimetype:
           type: string
-          description: "The MIME type of the content file. For example, text/plain, text/csv\r\n"
+          description: "The MIME type of the content file. For example, text/plain, text/csv.\r\n"
         filename:
           type: string
           description: "The name of the content file with its extension.\r\n"
@@ -1546,7 +1549,7 @@ components:
           description: "The time-to-live (TTL) value in seconds for the campaign message.\r\n"
         file_mimetype:
           type: string
-          description: "The MIME type of the content file. For example, text/plain, text/csv\r\n"
+          description: "The MIME type of the content file. For example, text/plain, text/csv.\r\n"
         filename:
           type: string
           description: "The name of the content file with its extension.\r\n"

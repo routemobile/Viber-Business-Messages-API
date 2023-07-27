@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "72200d02-1bf3-4a7f-a474-df5ea6857e90",
+		"_postman_id": "afcbcf6e-49af-4ed3-9e70-ae6975439a31",
 		"name": "Route Mobile Viber OpenAPI Specification",
 		"description": "Welcome to the Route Mobile developer hub. You'll find comprehensive Viber API documentation to help you start working with Route Mobile as quickly as possible, as well as support if you get stuck. Let's jump right in!\n\nContact Support:\n Name: Route Mobile Development",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -11,7 +11,7 @@
 			"name": "Viber Login",
 			"item": [
 				{
-					"name": "/auth/v1/login/",
+					"name": "Login API",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -217,7 +217,7 @@
 			"name": "Viber Client Callback API",
 			"item": [
 				{
-					"name": "/callback",
+					"name": "Viber Client Callback",
 					"request": {
 						"auth": {
 							"type": "apikey",
@@ -325,7 +325,7 @@
 			"name": "Viber Business Messaging API",
 			"item": [
 				{
-					"name": "/vbs/api/v2/send",
+					"name": "Viber Send Single Messages APIs",
 					"request": {
 						"auth": {
 							"type": "apikey",
@@ -674,7 +674,7 @@
 					]
 				},
 				{
-					"name": "/vbs/api/v2/manage-campaign",
+					"name": "Viber Send Campaign Messages APIs",
 					"request": {
 						"auth": {
 							"type": "apikey",
@@ -1023,7 +1023,7 @@
 					]
 				},
 				{
-					"name": "/vbs/api/v2/upload",
+					"name": "Campaign File Upload",
 					"request": {
 						"auth": {
 							"type": "apikey",

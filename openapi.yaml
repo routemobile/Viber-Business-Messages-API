@@ -9,6 +9,10 @@ info:
   contact:
     url: https://developers.routemobile.com/
     name: Route Mobile Development
+x-logo:
+    url: "https://routemobile.github.io/Viber-Business-Messages-API/Logo.png"
+    backgroundColor: "#FFFFFF"
+    altText: "RouteMobile logo"
 servers:
   - url: https://apis.rmlconnect.net
   - url: '{client callback}'

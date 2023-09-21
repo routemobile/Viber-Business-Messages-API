@@ -1593,7 +1593,8 @@
 					"description": "Types of Viber Business messaging APIs."
 				}
 			],
-			"id": "c8f157ad-efd0-44be-b5cd-e6ca2aea2013"
+			"id": "c8f157ad-efd0-44be-b5cd-e6ca2aea2013",
+			"description": "Welcome to the Route Mobile developer hub. You'll find comprehensive Viber API documentation to help you start working with Route Mobile as quickly as possible, as well as support if you get stuck. Let's jump right in!\n\nFor more information, see the [Route Mobile Open API Specifications](https://routemobile.github.io/Viber-Business-Messages-API/VBM.html)\n\nContact Support:  \nName: Route Mobile Development"
 		},
 		{
 			"name": "Login",

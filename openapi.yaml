@@ -9,10 +9,20 @@ info:
   contact:
     url: https://developers.routemobile.com/
     name: Route Mobile Development
+    email: support@routemobile.com
+  license:
+    name: Proprietary
+    url: https://www.routemobile.com/terms-conditions/
+  x-logo:
+    url: "https://routemobile.github.io/Viber-Business-Messages-API/Logo.png"
+    backgroundColor: "#FFFFFF"
+    altText: "RouteMobile logo"
 x-logo:
     url: "https://routemobile.github.io/Viber-Business-Messages-API/Logo.png"
     backgroundColor: "#FFFFFF"
     altText: "RouteMobile logo"
+security:
+  - jwt: []
 servers:
   - url: https://apis.rmlconnect.net
   - url: '{client callback}'
@@ -28,8 +38,16 @@ paths:
         callbacks are triggered by events that occur on the Viber server, and
         are delivered to a URL that you specify in your webhook configuration.
       operationId: viberClientCallback
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
       requestBody:
         description: ''
+        required: true
         content:
           application/json:
             schema:
@@ -57,21 +75,62 @@ paths:
                     file_name: '{filename with extension}'
                   service_type: two_way/session
                   request_id: 1a761762-bdf5-11eb-aa2f-0242acxxxxxx
-              Delivery Report:
+              Delivery Report - Delivered:
                 value:
-                  message_status: delivered/seen/expired/subscribe/unsubscribe
-                  message_time: 1499163009878
-                  phone_number: 97251890xxxx
-                  service_type: one_way/two_way/session
-                  request_id: a4a3bbf0-14ff-11eb-9acf-0242acxxxxxx
+                  message_status: delivered
+                  message_time: 1767762961213
+                  phone_number: '{phone number with country code}'
+                  service_type: dlr
+                  request_id: f33647ec-eb87-11f0-aa5a-0242acxxxxxx
+              Delivery Report - Sent:
+                value:
+                  session_id: null
+                  request_id: f33647ec-eb87-11f0-aa5a-0242acxxxxxx
+                  message_status: Sent
+                  message_time: 1767762958
+                  phone_number: '{phone number with country code}'
+                  matching_template_id: null
+                  service_type: dlr
+              Delivery Report - Seen:
+                value:
+                  message_status: seen
+                  message_time: 1767763013183
+                  phone_number: '{phone number with country code}'
+                  service_type: dlr
+                  request_id: f33647ec-eb87-11f0-aa5a-0242acxxxxxx
+              Delivery Report - Expired:
+                value:
+                  message_status: expired
+                  message_time: 1767763626948
+                  phone_number: '{phone number with country code}'
+                  service_type: dlr
+                  request_id: 818249f0-eb89-11f0-ba44-0242acxxxxxx
       responses:
         '200':
           description: Success
-      security:
-        - jwt: []
-      servers:
-        - url: https://apis.rmlconnect.net
-        - url: '{client callback}'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The error status.
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    message: Too many requests. Please retry after the indicated time.
+                    retry_after: 60
+      security: []
   /auth/v1/login/:
     post:
       tags:
@@ -87,7 +146,15 @@ paths:
         **By default, the JSON Web Token (JWT) validity periods are set to one
         hour.**
       operationId: loginApi2
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -135,6 +202,28 @@ paths:
                 User is set inactive:
                   value:
                     status: invalid credentials or the account has been deactivated
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The error status.
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    message: Too many requests. Please retry after the indicated time.
+                    retry_after: 60
         '500':
           description: Internal Server Error
           content:
@@ -149,44 +238,63 @@ paths:
                 Unhandled Exception:
                   value:
                     status: <exception>
-      servers:
-        - url: https://apis.rmlconnect.net
-        - url: '{client callback}'
+      security: []
   /vbs/api/v2/send:
     post:
       tags:
         - Viber Business Messaging API
       summary: Viber Send Single Messages APIs
       description: >-
-        Viber Business Send Messages APIs allow businesses to send types of
-        messages to their users on the Viber platform. These APIs enable
+        Viber Business Send Messages APIs allow businesses to send a variety of
+        message types to their users on the Viber platform. These APIs enable
         businesses to engage with their customers, deliver personalized content,
         and provide interactive experiences through Viber's messaging platform.
 
 
-        Here are some key Viber Business Send Single Message APIs:
+        Here are the supported Viber Business Send Single Message types:
 
 
-        - **Single Text Button Image:** Send a single message with text, a
-        button, and an image to a recipient. 
+        - **Single Text:** Send a plain text message to a recipient.
 
-        - **Single Text Button:** Send a single text message with a button to a
-        recipient. 
+        - **Single Text Button:** Send a text message with an action button.
 
-        - **Single Text:** Send a single text message to a recipient without any
-        additional elements such as buttons, images, or videos.
+        - **Single Text Button Image:** Send a message combining text, a button,
+        and an image.
 
-        - **Single Image:** Send a single image message to a recipient. 
+        - **Single Text Image:** Send a message combining text and an image.
 
-        - **Single File:** Send a single file message to a recipient. 
+        - **Single Image:** Send a standalone image message.
 
-        - **Single Video:** Send a single video message to a recipient. 
+        - **Single File:** Send a file/document attachment.
 
-        - **Single Video Text:** Send a single message with text and a video to
-        a recipient. 
+        - **Single Video:** Send a video message.
+
+        - **Single Video Text:** Send a video with accompanying text.
+
+        - **Single Video Button Text:** Send a video with text and an action button.
+
+        - **Single Video Text Action Button:** Send a video with text and a
+        structured action button object.
+
+        - **OTP / Verification Message:** Send a one-time password or
+        verification code using a pre-approved template.
+
+        - **Text Template:** Send a branded text message using an approved
+        template ID.
+
+        - **Text Message with Fallback:** Send a Viber message with an automatic
+        fallback to WhatsApp or SMS if the recipient is unreachable on Viber.
       operationId: singleVideoText
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
       requestBody:
         description: ''
+        required: true
         content:
           application/json:
             schema:
@@ -194,10 +302,16 @@ paths:
                 - $ref: '#/components/schemas/vbs_single_textbuttonimg_msg'
                 - $ref: '#/components/schemas/vbs_single_textbutton_msg'
                 - $ref: '#/components/schemas/vbs_single_text_msg'
+                - $ref: '#/components/schemas/vbs_single_textimage_msg'
                 - $ref: '#/components/schemas/vbs_single_image_msg'
                 - $ref: '#/components/schemas/vbs_single_file_msg'
                 - $ref: '#/components/schemas/vbs_single_video_msg'
                 - $ref: '#/components/schemas/vbs_single_videotext_msg'
+                - $ref: '#/components/schemas/vbs_single_video_button_text_msg'
+                - $ref: '#/components/schemas/vbs_single_video_text_action_button_msg'
+                - $ref: '#/components/schemas/vbs_single_otp_msg'
+                - $ref: '#/components/schemas/vbs_single_text_template_msg'
+                - $ref: '#/components/schemas/vbs_single_fallback_msg'
             examples:
               Single Text Button Image:
                 value:
@@ -254,6 +368,82 @@ paths:
                   ttl: '{time in seconds}'
                   message_type: text_video
                   method: two_way
+              Single Text Image:
+                value:
+                  phone: '{mobile with country code}'
+                  message_type: text_image
+                  method: promotion
+                  img: '{image link with https:// with extension}'
+                  text: '{body text}'
+                  tracking_data: '{tracking data}'
+              Single Video Button Text:
+                value:
+                  phone: '{mobile with country code}'
+                  message_type: video_action
+                  method: promotion
+                  video: '{video link with https:// with extension}'
+                  text: '{body text}'
+                  thumbnail_url: '{thumbnail image link with https:// with extension}'
+                  button_text: '{button text}'
+              Single Video Text Action Button:
+                value:
+                  phone: '{mobile with country code}'
+                  message_type: video_text_action_button
+                  method: promotion
+                  video: '{video link with https:// with extension}'
+                  text: '{body text}'
+                  thumbnail_url: '{thumbnail image link with https:// with extension}'
+                  button:
+                    button_url: '{button url with https://}'
+                    button_text: '{button text}'
+              OTP Verification Message:
+                value:
+                  phone: '{mobile with country code}'
+                  message_type: verify_otp
+                  method: verify
+                  template:
+                    template_id: '{template UUID}'
+                    template_params:
+                      pin: '{otp code}'
+                      business_platform_name: '{business name}'
+                    template_lang: en
+              Text Template:
+                value:
+                  phone: '{mobile with country code}'
+                  message_type: text_template
+                  method: transaction
+                  text: '{message text}'
+                  tracking_data: '{tracking data}'
+              Text with Fallback to WhatsApp:
+                value:
+                  phone: '{mobile with country code}'
+                  message_type: text
+                  method: transaction
+                  text: '{message text}'
+                  tracking_data: '{tracking data}'
+                  fallback_channel: whatsapp
+                  fallback_whatsapp:
+                    fallback_sender: '{sender id}'
+                    fallback_username: '{whatsapp username}'
+                    fallback_text: '{fallback message text}'
+                    template_id: '{whatsapp template id}'
+                    tm_id: '{tm id}'
+                    pe_id: '{pe id}'
+              Text with Fallback to SMS:
+                value:
+                  phone: '{mobile with country code}'
+                  message_type: text
+                  method: transaction
+                  text: '{message text}'
+                  tracking_data: '{tracking data}'
+                  fallback_channel: sms
+                  fallback_sms:
+                    fallback_sender: '{sender id}'
+                    fallback_username: '{sms username}'
+                    fallback_text: '{fallback message text}'
+                    template_id: '{sms template id}'
+                    tm_id: '{tm id}'
+                    pe_id: '{pe id}'
           application/xml:
             schema:
               type: object
@@ -382,6 +572,28 @@ paths:
                     requested URL was not found on the server. If you entered
                     the URL manually please check your spelling and try
                     again.</p>
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The error status.
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    message: Too many requests. Please retry after the indicated time.
+                    retry_after: 60
         '500':
           description: Internal Server Error
           content:
@@ -402,47 +614,64 @@ paths:
                     message: Unknown error occured while processing request
       security:
         - jwt: []
-      servers:
-        - url: https://apis.rmlconnect.net
-        - url: '{client callback}'
   /vbs/api/v2/manage-campaign:
     post:
       tags:
         - Viber Business Messaging API
       summary: Viber Send Campaign Messages APIs
       description: >
-        Viber Business Send Campaign Messages APIs allow businesses to send
-        campaign messages to their users on the Viber platform. These APIs
-        enable businesses to engage with their customers, deliver personalized
-        content, and provide interactive experiences through Viber's messaging
-        platform.
-
-
-        Here are some key Viber Business Send Campaign Messages APIs:
-
-        - **Campaign Text Button Image:** Send a campaign message with text, a
-        button, and an image to multiple recipients.
-
-        - **Campaign Text Button:** Send a campaign message with a text and a
-        button to multiple recipients.
-
-        - **Campaign Text:** Send a campaign message with a single text to
-        multiple recipients. 
-
-        - **Campaign Image:** Send a campaign message with an image to multiple
+        Viber Business Send Campaign Messages APIs allow businesses to send bulk
+        campaign messages to multiple users on the Viber platform. A campaign
+        uses a `file_code` returned from the Campaign File Upload API to address
         recipients.
 
-        - **Campaign File:** Send a campaign message with a file attachment to
+
+        Here are the supported Viber Business Send Campaign Message types:
+
+
+        - **Campaign Text:** Send a plain text message to multiple recipients.
+
+        - **Campaign Text Button:** Send a text message with an action button to
         multiple recipients.
 
-        - **Campaign Video:** Send a campaign message with a video to multiple
+        - **Campaign Text Button Image:** Send a message with text, a button,
+        and an image to multiple recipients.
+
+        - **Campaign Text Image:** Send a message combining text and an image.
+
+        - **Campaign Image:** Send a standalone image to multiple recipients.
+
+        - **Campaign File:** Send a file/document attachment to multiple
         recipients.
 
-        - **Campaign Video Text:** Send a campaign message with text and a video
-        to multiple recipients.
+        - **Campaign Video:** Send a video message to multiple recipients.
+
+        - **Campaign Video Text:** Send a video with accompanying text to
+        multiple recipients.
+
+        - **Campaign Video Text Action Button:** Send a video with text and a
+        structured action button to multiple recipients.
+
+        - **Campaign Text Template:** Send a branded text message using an
+        approved template to multiple recipients.
+
+        - **Campaign with Fallback:** Send a Viber campaign with an automatic
+        fallback to WhatsApp or SMS if recipients are unreachable on Viber.
+
+
+        Optionally include `schedule_datetime` and `timezone` to schedule the
+        campaign for a future send time.
       operationId: campaignVideoText
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
       requestBody:
         description: ''
+        required: true
         content:
           application/json:
             schema:
@@ -450,10 +679,14 @@ paths:
                 - $ref: '#/components/schemas/vbs_campaign_text_button_image'
                 - $ref: '#/components/schemas/vbs_campaign_text_button'
                 - $ref: '#/components/schemas/vbs_campaign_text_msg'
+                - $ref: '#/components/schemas/vbs_campaign_textimage_msg'
                 - $ref: '#/components/schemas/vbs_campaign_image_msg'
                 - $ref: '#/components/schemas/vbs_campaign_file_msg'
                 - $ref: '#/components/schemas/vbs_campaign_video_msg'
                 - $ref: '#/components/schemas/vbs_campaign_video_text_msg'
+                - $ref: '#/components/schemas/vbs_campaign_video_text_action_button_msg'
+                - $ref: '#/components/schemas/vbs_campaign_text_template_msg'
+                - $ref: '#/components/schemas/vbs_campaign_fallback_msg'
             examples:
               Campaign Text Button Image:
                 value:
@@ -545,20 +778,83 @@ paths:
                     method: two_way
               Campaign Video Text:
                 value:
-                  campaign_id: '{campaign id generated post file upload}'
-                  campaign_action: start
+                  file_code: '{file code from upload}'
                   campaign_name: '{campaign name}'
-                  ttl: '{time in seconds}'
-                  file_mimetype: text/plain
-                  filename: '{filename with extension}'
+                  personalised: false
                   payload:
-                    video: >-
-                      {Public URL starting with http:// and ending with file
-                      extension}
-                    message_type: video
-                    thumbnail_url: '{image link with https:// with extension}'
+                    message_type: text_video
+                    method: promotion
+                    video: '{video link with https:// with extension}'
                     text: '{body text}'
-                    method: two_way
+                    thumbnail_url: '{thumbnail image link with https:// with extension}'
+              Campaign Text Image:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: text_image
+                    method: promotion
+                    img: '{image link with https:// with extension}'
+                    text: '{body text}'
+              Campaign Video Text Action Button:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: video_text_action_button
+                    method: promotion
+                    video: '{video link with https:// with extension}'
+                    text: '{body text}'
+                    thumbnail_url: '{thumbnail image link with https:// with extension}'
+                    button:
+                      button_url: '{button url with https://}'
+                      button_text: '{button text}'
+              Campaign Text Template:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: text_template
+                    method: promotion
+                    text: '{message text}'
+                    tracking_data: '{tracking data}'
+              Campaign with Fallback to SMS:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: image
+                    method: promotion
+                    img: '{image link with https:// with extension}'
+                    fallback_channel: sms
+                    fallback_sms:
+                      fallback_sender: '{sender id}'
+                      fallback_username: '{sms username}'
+                      fallback_text: '{fallback message text}'
+                      template_id: '{sms template id}'
+                      tm_id: '{tm id}'
+                      pe_id: '{pe id}'
+              Campaign with Fallback to WhatsApp:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: image
+                    method: promotion
+                    img: '{image link with https:// with extension}'
+                    fallback_channel: whatsapp
+                    fallback_whatsapp:
+                      fallback_sender: '{sender id}'
+                      fallback_username: '{whatsapp username}'
+                      fallback_text: '{fallback message text}'
+                      template_id: '{whatsapp template id}'
+                      tm_id: '{tm id}'
+                      pe_id: '{pe id}'
       responses:
         '202':
           description: Accepted
@@ -657,6 +953,28 @@ paths:
                     requested URL was not found on the server. If you entered
                     the URL manually please check your spelling and try
                     again.</p>
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The error status.
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    message: Too many requests. Please retry after the indicated time.
+                    retry_after: 60
         '500':
           description: Internal Server Error
           content:
@@ -677,50 +995,98 @@ paths:
                     message: Unknown error occured while processing request
       security:
         - jwt: []
-      servers:
-        - url: https://apis.rmlconnect.net
-        - url: '{client callback}'
   /vbs/api/v2/upload:
     post:
       tags:
         - Viber Business Messaging API
       summary: Campaign File Upload
       description: >-
-        The Campaign File Upload API allows businesses to securely transfer
-        their files to Viber's platform for later use in their campaigns.
+        The Campaign File Upload API allows businesses to securely upload their
+        contact list or campaign content files to Viber's platform for use in
+        bulk campaigns.
 
 
-        When businesses want to include media files such as images, videos,
-        audio files, or other types of files in their Viber campaigns, they need
-        to upload those files to Viber's servers. 
+        Files must be uploaded as binary data using `multipart/form-data`.
+        The following file formats are supported:
+
+        - **CSV** (`.csv`) — Comma-separated contact list
+
+        - **Excel** (`.xlsx`, `.xls`) — Spreadsheet contact list
+
+        - **Plain Text** (`.txt`) — Tab or newline-delimited contact list
+
+        - **ZIP** (`.zip`) — Archive containing a single CSV file
+
+
+        Once uploaded, the API returns a `campaign_id` which is required when
+        sending campaign messages via the Send Campaign Messages API.
       operationId: campaignFileUpload
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
       requestBody:
+        required: true
         description: >
-          The file could be sent as part of a multipart/form-data request or
-          through other supported methods specified by Viber.
+          Upload a campaign contact list or content file as a binary multipart/form-data
+          request. Supported formats: CSV, XLSX, XLS, TXT, and ZIP (containing CSV).
+          For sample file formats, see:
+
+          - [Bulk Upload File](https://github.com/routemobile/Viber-Business-Messages-API/blob/master/Sample%20Bulk%20Upload%20File.txt)
+
+          - [Bulk Upload Campaign File](https://github.com/routemobile/Viber-Business-Messages-API/blob/master/Sample%20Bulk%20Campaign%20File.csv)
         content:
           multipart/form-data:
             schema:
               type: object
+              required:
+                - File
+                - File_mimetype
               properties:
                 File:
                   type: string
-                  description: 'The name of the file with extension. For more information, see the sample files to upload bulk messages:
-            
-            - [Bulk Upload File](https://github.com/routemobile/Viber-Business-Messages-API/blob/master/Sample%20Bulk%20Upload%20File.txt)
-            
-            - [Bulk Upload Campaign File](https://github.com/routemobile/Viber-Business-Messages-API/blob/master/Sample%20Bulk%20Campaign%20File.csv)'
+                  format: binary
+                  description: >-
+                    The binary file to upload. Supported formats: CSV (.csv),
+                    Excel (.xlsx, .xls), plain text (.txt), or a ZIP archive
+                    (.zip) containing a CSV file.
                 File_mimetype:
                   type: string
                   description: >-
-                    The MIME type of the content file. For example, text/plain,
-                    text/csv
+                    The MIME type of the uploaded file. Must match the actual
+                    file format being sent.
+                  enum:
+                    - text/csv
+                    - text/plain
+                    - application/vnd.ms-excel
+                    - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+                    - application/zip
+                    - application/x-zip-compressed
                   example: text/csv
+            encoding:
+              File:
+                contentType: >-
+                  text/csv, text/plain,
+                  application/vnd.ms-excel,
+                  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+                  application/zip,
+                  application/x-zip-compressed
             examples:
-              Example 1:
+              CSV Upload:
                 value:
-                  File: <file_content>
-                  File_mimetype: <file_mimetype>
+                  File: <binary CSV file content>
+                  File_mimetype: text/csv
+              Excel Upload:
+                value:
+                  File: <binary XLSX file content>
+                  File_mimetype: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+              ZIP Upload:
+                value:
+                  File: <binary ZIP file content>
+                  File_mimetype: application/zip
       responses:
         '200':
           description: Success
@@ -800,6 +1166,28 @@ paths:
                     requested URL was not found on the server. If you entered
                     the URL manually please check your spelling and try
                     again.</p>
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The error status.
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    message: Too many requests. Please retry after the indicated time.
+                    retry_after: 60
         '500':
           description: Internal Server Error
           content:
@@ -820,16 +1208,1668 @@ paths:
                     message: Unknown error occured while processing request
       security:
         - jwt: []
-      servers:
-        - url: https://apis.rmlconnect.net
-        - url: '{client callback}'
+  /vbs/api/v3/send_bulk:
+    post:
+      tags:
+        - Viber Bulk Messaging API
+      summary: Viber Send Bulk Messages API
+      description: >-
+        The Viber Send Bulk Messages API allows businesses to send campaign
+        messages to multiple recipients at once. The recipients are defined by
+        a `file_code` returned from the Campaign File Upload API.
+
+
+        Supported bulk message types include text, image, text+image, text
+        button, text button image, file, video, video+text, video+text+action
+        button, and text template. Fallback delivery to SMS or WhatsApp is
+        supported on any message type by including `fallback_channel` and the
+        corresponding `fallback_sms` or `fallback_whatsapp` block inside the
+        payload.
+
+
+        Campaigns can be scheduled by providing `schedule_datetime` (format:
+        `YYYY-MM-DD HH:MM:SS`) and `timezone` (e.g. `Asia/Kolkata`).
+      operationId: sendBulkMessages
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
+      requestBody:
+        required: true
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/vbs_bulk_text_msg'
+                - $ref: '#/components/schemas/vbs_bulk_text_button_msg'
+                - $ref: '#/components/schemas/vbs_bulk_text_button_image_msg'
+                - $ref: '#/components/schemas/vbs_bulk_textimage_msg'
+                - $ref: '#/components/schemas/vbs_bulk_image_msg'
+                - $ref: '#/components/schemas/vbs_bulk_file_msg'
+                - $ref: '#/components/schemas/vbs_bulk_video_msg'
+                - $ref: '#/components/schemas/vbs_bulk_video_text_msg'
+                - $ref: '#/components/schemas/vbs_bulk_video_text_action_button_msg'
+                - $ref: '#/components/schemas/vbs_bulk_text_template_msg'
+                - $ref: '#/components/schemas/vbs_bulk_fallback_msg'
+            examples:
+              Bulk Text:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: text
+                    method: transaction
+                    text: '{message text}'
+              Bulk Text Button:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: media
+                    method: promotion
+                    text: '{message text}'
+                    button_text: '{button text}'
+                    button_link: '{button url with https://}'
+              Bulk Text Button Image:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: template
+                    method: promotion
+                    text: '{message text}'
+                    button_text: '{button text}'
+                    button_link: '{button url with https://}'
+                    img: '{image link with https:// with extension}'
+              Bulk Text Image:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: text_image
+                    method: promotion
+                    img: '{image link with https:// with extension}'
+                    text: '{body text}'
+              Bulk Image:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: image
+                    method: promotion
+                    img: '{image link with https:// with extension}'
+              Bulk File:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: file
+                    method: transaction
+                    file_url: '{file link with https:// with extension}'
+                    file_name: '{file name with extension}'
+              Bulk Video:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: video
+                    method: promotion
+                    video: '{video link with https:// with extension}'
+                    thumbnail_url: '{thumbnail image link with https:// with extension}'
+              Bulk Video Text:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: text_video
+                    method: promotion
+                    video: '{video link with https:// with extension}'
+                    text: '{body text}'
+                    thumbnail_url: '{thumbnail image link with https:// with extension}'
+              Bulk Video Text Action Button:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: video_text_action_button
+                    method: promotion
+                    video: '{video link with https:// with extension}'
+                    text: '{body text}'
+                    thumbnail_url: '{thumbnail image link with https:// with extension}'
+                    button:
+                      button_url: '{button url with https://}'
+                      button_text: '{button text}'
+              Bulk Text Template:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: text_template
+                    method: promotion
+                    text: '{message text}'
+                    tracking_data: '{tracking data}'
+              Bulk with Fallback to SMS:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: image
+                    method: promotion
+                    img: '{image link with https:// with extension}'
+                    fallback_channel: sms
+                    fallback_sms:
+                      fallback_sender: '{sender id}'
+                      fallback_username: '{sms username}'
+                      fallback_text: '{fallback message text}'
+                      template_id: '{sms template id}'
+                      tm_id: '{tm id}'
+                      pe_id: '{pe id}'
+              Bulk with Fallback to WhatsApp:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  payload:
+                    message_type: image
+                    method: promotion
+                    img: '{image link with https:// with extension}'
+                    fallback_channel: whatsapp
+                    fallback_whatsapp:
+                      fallback_sender: '{sender id}'
+                      fallback_username: '{whatsapp username}'
+                      fallback_text: '{fallback message text}'
+                      template_id: '{whatsapp template id}'
+                      tm_id: '{tm id}'
+                      pe_id: '{pe id}'
+              Scheduled Bulk Campaign:
+                value:
+                  file_code: '{file code from upload}'
+                  campaign_name: '{campaign name}'
+                  personalised: false
+                  schedule_datetime: '2025-06-01 10:00:00'
+                  timezone: Asia/Kolkata
+                  payload:
+                    message_type: text
+                    method: promotion
+                    text: '{message text}'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the bulk message submission.
+                  message:
+                    type: string
+                    description: The response message.
+              examples:
+                Campaign accepted:
+                  value:
+                    status: success
+                    message: campaign with id ce078410-e593-11ed-9242-0242ac11xxxx is now processing
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: array
+                    items:
+                      type: string
+                    description: List of validation errors.
+              examples:
+                Invalid file code:
+                  value:
+                    error:
+                      - file_code - Invalid or expired file code.
+                Campaign name too short:
+                  value:
+                    error:
+                      - campaign_name - Shorter than minimum length 3.
+                Invalid message type:
+                  value:
+                    status: failed
+                    message: Api execution not successful
+                    details: Please provide message type
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    description: Unauthorized access.
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The error status.
+                  message:
+                    type: string
+                    description: Rate limit exceeded message.
+                  retry_after:
+                    type: integer
+                    description: Number of seconds to wait before retrying.
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    message: Too many requests. Please retry after the indicated time.
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The status of the bulk send operation.
+                  message:
+                    type: string
+                    description: The response message.
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+        - jwt: []
+  /viber-reports/api/v2/summary-cards:
+    get:
+      tags:
+        - Viber Reports API
+      summary: Summary Cards
+      description: >-
+        Returns high-level summary metrics for a given date range, including
+        total messages sent, delivered, seen, and failed. Used to populate
+        dashboard summary card widgets.
+      operationId: getSummaryCards
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Start date for the report period (YYYY-MM-DD).
+          example: '2025-01-01'
+        - name: end_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: End date for the report period (YYYY-MM-DD).
+          example: '2025-12-31'
+        - name: message_type
+          in: query
+          required: false
+          schema:
+            type: string
+            default: all
+          description: Filter by message type. Use `all` to include all types.
+          example: all
+        - name: service_type
+          in: query
+          required: false
+          schema:
+            type: string
+            default: all
+          description: Filter by service type (e.g. `one_way`, `two_way`, `session`, `all`).
+          example: all
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_sent:
+                    type: integer
+                    description: Total messages sent.
+                  total_delivered:
+                    type: integer
+                    description: Total messages delivered.
+                  total_seen:
+                    type: integer
+                    description: Total messages seen/read.
+                  total_failed:
+                    type: integer
+                    description: Total messages that failed.
+              examples:
+                Summary cards:
+                  value:
+                    total_sent: 15000
+                    total_delivered: 13200
+                    total_seen: 9800
+                    total_failed: 1800
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+        - jwt: []
+  /viber-reports/api/v2/graph:
+    get:
+      tags:
+        - Viber Reports API
+      summary: Graph Report
+      description: >-
+        Returns time-series data points for message delivery metrics over a
+        specified date range. Used to populate trend graphs on the reporting
+        dashboard.
+      operationId: getGraphReport
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Start date for the graph data (YYYY-MM-DD).
+          example: '2025-01-01'
+        - name: end_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: End date for the graph data (YYYY-MM-DD).
+          example: '2025-12-31'
+        - name: message_type
+          in: query
+          required: false
+          schema:
+            type: string
+            default: all
+          description: Filter by message type.
+          example: all
+        - name: service_type
+          in: query
+          required: false
+          schema:
+            type: string
+            default: all
+          description: Filter by service type.
+          example: all
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    description: Array of daily data points.
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          format: date
+                          description: The date of the data point.
+                        sent:
+                          type: integer
+                          description: Messages sent on this date.
+                        delivered:
+                          type: integer
+                          description: Messages delivered on this date.
+                        seen:
+                          type: integer
+                          description: Messages seen on this date.
+              examples:
+                Graph data:
+                  value:
+                    data:
+                      - date: '2025-01-01'
+                        sent: 500
+                        delivered: 460
+                        seen: 310
+                      - date: '2025-01-02'
+                        sent: 620
+                        delivered: 580
+                        seen: 400
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+        - jwt: []
+  /viber-reports/api/v2/media-cards:
+    get:
+      tags:
+        - Viber Reports API
+      summary: Media Cards
+      description: >-
+        Returns a breakdown of message delivery metrics grouped by media/message
+        type (text, image, video, file, etc.) for a given date range. Used to
+        populate media-type breakdown cards on the reporting dashboard.
+      operationId: getMediaCards
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Start date for the report period (YYYY-MM-DD).
+          example: '2025-01-01'
+        - name: end_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: End date for the report period (YYYY-MM-DD).
+          example: '2025-12-31'
+        - name: message_type
+          in: query
+          required: false
+          schema:
+            type: string
+            default: all
+          description: Filter by a specific message type, or `all`.
+          example: all
+        - name: service_type
+          in: query
+          required: false
+          schema:
+            type: string
+            default: all
+          description: Filter by service type.
+          example: all
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  media_breakdown:
+                    type: array
+                    description: Metrics broken down by message type.
+                    items:
+                      type: object
+                      properties:
+                        message_type:
+                          type: string
+                          description: The message type (e.g. text, image, video).
+                        sent:
+                          type: integer
+                          description: Total messages sent of this type.
+                        delivered:
+                          type: integer
+                          description: Total delivered of this type.
+              examples:
+                Media cards:
+                  value:
+                    media_breakdown:
+                      - message_type: text
+                        sent: 8000
+                        delivered: 7200
+                      - message_type: image
+                        sent: 4000
+                        delivered: 3600
+                      - message_type: video
+                        sent: 3000
+                        delivered: 2400
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+        - jwt: []
+  /viber-reports/api/v2/camps:
+    get:
+      tags:
+        - Viber Reports API
+      summary: Campaign Report
+      description: >-
+        Returns a paginated list of campaigns and their delivery metrics for a
+        given date range. Used to view per-campaign performance on the reporting
+        dashboard.
+      operationId: getCampaignReport
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Start date for the campaign report (YYYY-MM-DD).
+          example: '2025-01-01'
+        - name: end_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: End date for the campaign report (YYYY-MM-DD).
+          example: '2025-12-31'
+        - name: message_type
+          in: query
+          required: false
+          schema:
+            type: string
+            default: all
+          description: Filter by message type.
+          example: all
+        - name: service_type
+          in: query
+          required: false
+          schema:
+            type: string
+            default: all
+          description: Filter by service type.
+          example: all
+        - name: page_number
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination.
+          example: 1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaigns:
+                    type: array
+                    description: List of campaign records.
+                    items:
+                      type: object
+                      properties:
+                        campaign_name:
+                          type: string
+                          description: The name of the campaign.
+                        total_sent:
+                          type: integer
+                          description: Total messages sent in this campaign.
+                        total_delivered:
+                          type: integer
+                          description: Total messages delivered.
+                        total_seen:
+                          type: integer
+                          description: Total messages seen/read.
+                        total_failed:
+                          type: integer
+                          description: Total messages that failed.
+                        created_at:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the campaign was created.
+                  total:
+                    type: integer
+                    description: Total number of campaigns matching the filter.
+              examples:
+                Campaign report:
+                  value:
+                    campaigns:
+                      - campaign_name: Summer Promo
+                        total_sent: 5000
+                        total_delivered: 4600
+                        total_seen: 3100
+                        total_failed: 400
+                        created_at: '2025-06-01T10:00:00Z'
+                    total: 1
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+        - jwt: []
+  /viber-reports/api/v2/tabular:
+    get:
+      tags:
+        - Viber Reports API
+      summary: Daily Tabular Report
+      description: >-
+        Returns a paginated, per-message tabular report for a given date range.
+        Each record contains the phone number, message type, delivery status,
+        and timestamps. Supports filtering by timezone, message type, service
+        type, and optionally by a specific phone number.
+      operationId: getDailyTabularReport
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Start date for the tabular report (YYYY-MM-DD).
+          example: '2025-02-01'
+        - name: end_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: End date for the tabular report (YYYY-MM-DD).
+          example: '2026-02-01'
+        - name: timezone
+          in: query
+          required: false
+          schema:
+            type: string
+            default: Asia/Calcutta
+          description: Timezone for interpreting date filters (e.g. `Asia/Kolkata`).
+          example: Asia/Calcutta
+        - name: message_type
+          in: query
+          required: false
+          schema:
+            type: string
+            default: all
+          description: Filter by message type.
+          example: all
+        - name: service_type
+          in: query
+          required: false
+          schema:
+            type: string
+            default: all
+          description: Filter by service type.
+          example: all
+        - name: page_number
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination.
+          example: 1
+        - name: phone_no
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter results to a specific phone number.
+          example: '919769187972'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  records:
+                    type: array
+                    description: List of per-message records.
+                    items:
+                      type: object
+                      properties:
+                        phone_number:
+                          type: string
+                          description: The recipient phone number.
+                        message_type:
+                          type: string
+                          description: The type of message sent.
+                        service_type:
+                          type: string
+                          description: The service type used.
+                        status:
+                          type: string
+                          description: Delivery status of the message.
+                        sent_at:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the message was sent.
+                        request_id:
+                          type: string
+                          description: Unique identifier for the message request.
+                  total:
+                    type: integer
+                    description: Total number of records matching the filter.
+              examples:
+                Tabular report:
+                  value:
+                    records:
+                      - phone_number: '919769187972'
+                        message_type: text
+                        service_type: one_way
+                        status: delivered
+                        sent_at: '2025-06-01T08:30:00Z'
+                        request_id: 727591b0-e592-11ed-91d7-0242ac13xxxx
+                    total: 1
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+        - jwt: []
+  /viber-reports/api/v2/viber_templates:
+    get:
+      tags:
+        - Viber Reports API
+      summary: List Viber Templates
+      description: >-
+        Returns a paginated list of approved Viber message templates associated
+        with the account. Supports filtering by a specific template ID.
+      operationId: listViberTemplates
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
+      parameters:
+        - name: template_id
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter by a specific template UUID.
+          example: 0aac888f-2ee2-4112-9659-1755a951966a
+        - name: page_number
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination.
+          example: 1
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+          description: Number of templates per page.
+          example: 10
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  templates:
+                    type: array
+                    description: List of template objects.
+                    items:
+                      type: object
+                      properties:
+                        template_id:
+                          type: string
+                          description: Unique identifier of the template.
+                        template_name:
+                          type: string
+                          description: Name of the template.
+                        template_syntax:
+                          type: string
+                          description: The template message text with parameter placeholders.
+                        message_type:
+                          type: string
+                          description: The type of message (e.g. `viber_otp`, `text_template`).
+                        operator_template_id:
+                          type: string
+                          description: The operator-assigned template ID.
+                        status:
+                          type: string
+                          description: Approval status of the template.
+                  total:
+                    type: integer
+                    description: Total number of templates matching the filter.
+              examples:
+                Templates list:
+                  value:
+                    templates:
+                      - template_id: 0aac888f-2ee2-4112-9659-1755a951966a
+                        template_name: Basic OTP
+                        template_syntax: Your code is {{pin}}. Please don't share it with anyone.
+                        message_type: viber_otp
+                        operator_template_id: '8437'
+                        status: approved
+                    total: 1
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+        - jwt: []
+    post:
+      tags:
+        - Viber Reports API
+      summary: Add Viber Template
+      description: >-
+        Creates a new Viber message template for the account. Templates must be
+        submitted with a unique name, message syntax (with `{{parameter}}`
+        placeholders), the message type, and the operator-assigned template ID.
+        Templates require approval before they can be used in messages.
+      operationId: addViberTemplate
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/vbs_template_create'
+            examples:
+              OTP template:
+                value:
+                  template_name: Basic OTP
+                  template_syntax: >-
+                    Your code is {{pin}}. *Please don't share your code with
+                    ANYONE.* We'll never call or message you and ask for it.
+                  message_type: viber_otp
+                  operator_template_id: '8437'
+              Promotional template:
+                value:
+                  template_name: Summer Sale
+                  template_syntax: >-
+                    Hi {{name}}, our summer sale is live! Use code {{promo_code}}
+                    for 20% off. Valid till {{expiry_date}}.
+                  message_type: text_template
+                  operator_template_id: '9120'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  template_id:
+                    type: string
+                    description: UUID of the newly created template.
+                  status:
+                    type: string
+                    description: Approval status of the template.
+              examples:
+                Template created:
+                  value:
+                    template_id: 0aac888f-2ee2-4112-9659-1755a951966a
+                    status: pending_approval
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Validation error message.
+              examples:
+                Duplicate template name:
+                  value:
+                    error: A template with this name already exists.
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+        - jwt: []
+  /viber-report-creator/v1/fetch_reports:
+    get:
+      tags:
+        - Viber Reports API
+      summary: Fetch Reports
+      description: >-
+        Returns a paginated list of generated report records for a given date
+        range. Each record includes the report status, file path, and metadata.
+        Use the `file_path` value from a completed report to call the Download
+        Report endpoint.
+      operationId: fetchReports
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Start date and time for the report range (YYYY-MM-DD HH:MM:SS).
+          example: '2025-01-23 00:00:00'
+        - name: end_date
+          in: query
+          required: true
+          schema:
+            type: string
+          description: End date and time for the report range (YYYY-MM-DD HH:MM:SS).
+          example: '2026-01-23 00:00:00'
+        - name: page_number
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination.
+          example: 1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: array
+                    description: List of report objects.
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Unique identifier for the report.
+                        campaign_name:
+                          type: string
+                          nullable: true
+                          description: Campaign name if applicable, otherwise null.
+                        file_path:
+                          type: string
+                          description: Path to the generated report file. Use this to download.
+                        is_support:
+                          type: boolean
+                          description: Whether this is a support report.
+                        msisdn:
+                          type: string
+                          description: Phone number filter used, if any.
+                        status:
+                          type: string
+                          description: Report generation status (e.g. `completed`, `pending`).
+                        timestamp:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the report was generated.
+                        username:
+                          type: string
+                          description: Username that requested the report.
+                        payload:
+                          type: object
+                          description: Report configuration payload.
+                          properties:
+                            csv_max_lines:
+                              type: integer
+                              description: Maximum number of lines in the CSV output.
+                            filters:
+                              type: object
+                              properties:
+                                start_date:
+                                  type: string
+                                  description: Start date filter applied.
+                                end_date:
+                                  type: string
+                                  description: End date filter applied.
+                            projections:
+                              type: array
+                              items:
+                                type: string
+                              description: Fields projected in the report.
+                  total:
+                    type: integer
+                    description: Total number of reports matching the date range.
+              examples:
+                Reports list:
+                  value:
+                    result:
+                      - id: 42
+                        campaign_name: Summer Promo
+                        file_path: reports/6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip
+                        is_support: false
+                        msisdn: ''
+                        status: completed
+                        timestamp: '2025-06-01T10:30:00Z'
+                        username: demo
+                        payload:
+                          csv_max_lines: 10000
+                          filters:
+                            start_date: '2025-01-23 00:00:00'
+                            end_date: '2026-01-23 00:00:00'
+                          projections:
+                            - phone_number
+                            - status
+                            - sent_at
+                    total: 1
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+        - jwt: []
+  /viber-report-creator/v1/create_report:
+    post:
+      tags:
+        - Viber Reports API
+      summary: Create Report
+      description: >-
+        Triggers the generation of a new downloadable report for a given date
+        range. The report is created asynchronously — use the Fetch Reports
+        endpoint to check status, then the Download Report endpoint once the
+        status is `completed`.
+      operationId: createReport
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/vbs_report_create'
+            examples:
+              Create date-range report:
+                value:
+                  start_date: '2025-01-23 00:00:00'
+                  end_date: '2026-01-23 00:00:00'
+                  filters:
+                    message_type: all
+                    service_type: all
+                  projections:
+                    - phone_number
+                    - message_type
+                    - status
+                    - sent_at
+                    - request_id
+      responses:
+        '200':
+          description: Report creation initiated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  report_id:
+                    type: integer
+                    description: ID of the newly created report job.
+                  status:
+                    type: string
+                    description: Initial status of the report (e.g. `pending`).
+              examples:
+                Report created:
+                  value:
+                    report_id: 42
+                    status: pending
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Missing date range:
+                  value:
+                    error: start_date and end_date are required.
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+        - jwt: []
+  /viber-report-creator/v1/download/{file_name}:
+    get:
+      tags:
+        - Viber Reports API
+      summary: Download Report
+      description: >-
+        Downloads a generated report file by its file name. The file name is
+        obtained from the `file_path` field in the Fetch Reports response. The
+        report is returned as a ZIP archive containing a CSV file.
+      operationId: downloadReport
+      x-readme:
+        samples-languages:
+          - curl
+          - python
+          - node
+          - java
+          - php
+      parameters:
+        - name: file_name
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The file name of the report to download (e.g. `6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip`).
+          example: 6e36bde0-eb93-11f0-b4b9-0242ac11000c.zip
+      responses:
+        '200':
+          description: Report file download
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+                description: ZIP archive containing the report CSV file.
+        '404':
+          description: Report not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                Not found:
+                  value:
+                    error: Report file not found.
+        '401':
+          description: Authentication Failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+              examples:
+                Unauthorized:
+                  value:
+                    response: Unauthorized
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  retry_after:
+                    type: integer
+              examples:
+                Rate limit exceeded:
+                  value:
+                    status: error
+                    retry_after: 60
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                Server error:
+                  value:
+                    status: error
+                    message: Unknown error occured while processing request
+      security:
+        - jwt: []
 tags:
   - name: Viber Login
-    description: Login to Viber Business messaging APIs.
+    description: Authenticate and obtain a JWT token to access the Viber Business Messaging APIs. Tokens are valid for one hour by default.
   - name: Viber Client Callback API
-    description: Types of Viber client callback APIs.
+    description: Receive real-time webhook notifications for incoming messages and delivery reports from the Viber platform. Configure your callback URL in the webhook settings.
   - name: Viber Business Messaging API
-    description: Types of Viber Business messaging APIs.
+    description: Send single messages to individual Viber users including text, images, videos, files, OTP verification, and interactive buttons. Also manage campaign file uploads and legacy campaign send operations.
+  - name: Viber Bulk Messaging API
+    description: Send bulk campaign messages to multiple Viber recipients at once using a file_code from the Campaign File Upload API. Supports all message types including fallback delivery to SMS or WhatsApp, and scheduled campaign dispatch.
+  - name: Viber Reports API
+    description: Access delivery reports, campaign performance metrics, summary dashboards, and message-level tabular data. Create and download detailed CSV reports. Manage approved Viber message templates.
 components:
   securitySchemes:
     jwt:
@@ -846,6 +2886,7 @@ components:
           description: "The phone number of the user who sent the text message.\r\n"
         time:
           type: integer
+          format: date-time
           description: "The timestamp when the message was sent.\r\n"
         message:
           type: object
@@ -872,6 +2913,7 @@ components:
           description: "The phone number of the user who sent the text message.\r\n"
         time:
           type: integer
+          format: date-time
           description: "The timestamp when the message was sent.\r\n"
         message:
           type: object
@@ -901,6 +2943,7 @@ components:
           description: "The status of the message. Possible values are delivered, seen, expired, subscribe, or unsubscribe.\r\n"
         message_time:
           type: integer
+          format: date-time
           description: "The Unix timestamp when the message status was updated.\r\n"
         phone_number:
           type: string
@@ -1586,3 +3629,788 @@ components:
                 "two_way", the recipient will be able to reply to the message.
                 If set to "session", the recipient will be able to respond to
                 multiple interactions in the session chat bot.
+
+    vbs_single_textimage_msg:
+      type: object
+      title: Single Text Image
+      description: >-
+        Send a single message combining a text body and an image to a recipient.
+      properties:
+        phone:
+          type: string
+          description: The recipient's phone number in international format, including the country code.
+        message_type:
+          type: string
+          description: The type of the message. Must be set to "text_image".
+        method:
+          type: string
+          description: >-
+            The method of sending the message. Typically "promotion".
+        img:
+          type: string
+          description: The URL of the image, hosted publicly and starting with "https://".
+        text:
+          type: string
+          description: The body text to display alongside the image.
+        tracking_data:
+          type: string
+          description: Optional tracking identifier for the message.
+    vbs_single_video_button_text_msg:
+      type: object
+      title: Single Video Button Text
+      description: >-
+        Send a single video message with accompanying text and an action button
+        to a recipient.
+      properties:
+        phone:
+          type: string
+          description: The recipient's phone number in international format, including the country code.
+        message_type:
+          type: string
+          description: The type of the message. Must be set to "video_action".
+        method:
+          type: string
+          description: The method of sending the message (e.g. "promotion").
+        video:
+          type: string
+          description: >-
+            The URL of the video file, hosted publicly and starting with
+            "https://" and ending with the file extension such as ".mp4".
+        text:
+          type: string
+          description: The body text to display with the video.
+        thumbnail_url:
+          type: string
+          description: The thumbnail image URL for the video preview.
+        button_text:
+          type: string
+          description: The text label for the action button.
+    vbs_single_video_text_action_button_msg:
+      type: object
+      title: Single Video Text Action Button
+      description: >-
+        Send a single video message with text and a structured action button
+        (with both a URL and text label) to a recipient.
+      properties:
+        phone:
+          type: string
+          description: The recipient's phone number in international format, including the country code.
+        message_type:
+          type: string
+          description: The type of the message. Must be set to "video_text_action_button".
+        method:
+          type: string
+          description: The method of sending the message (e.g. "promotion").
+        video:
+          type: string
+          description: >-
+            The URL of the video file, hosted publicly and starting with
+            "https://" and ending with the file extension such as ".mp4".
+        text:
+          type: string
+          description: The body text to display with the video.
+        thumbnail_url:
+          type: string
+          description: The thumbnail image URL for the video preview.
+        button:
+          type: object
+          description: The structured action button object.
+          properties:
+            button_url:
+              type: string
+              description: The URL the button should open.
+            button_text:
+              type: string
+              description: The text label displayed on the button.
+    vbs_single_otp_msg:
+      type: object
+      title: OTP Verification Message
+      description: >-
+        Send a one-time password or verification code to a recipient using a
+        pre-approved Viber OTP template. Template parameters are passed as
+        key-value pairs inside `template_params`.
+      properties:
+        phone:
+          type: string
+          description: The recipient's phone number in international format, including the country code.
+        message_type:
+          type: string
+          description: The type of the message. Must be set to "verify_otp".
+        method:
+          type: string
+          description: The method of sending. Must be set to "verify".
+        template:
+          type: object
+          description: The OTP template configuration.
+          properties:
+            template_id:
+              type: string
+              description: The UUID of the approved OTP template.
+            template_params:
+              type: object
+              description: Key-value pairs of template parameter substitutions.
+              additionalProperties:
+                type: string
+            template_lang:
+              type: string
+              description: The language code for the template (e.g. "en").
+    vbs_single_text_template_msg:
+      type: object
+      title: Single Text Template
+      description: >-
+        Send a branded text message to a recipient using an approved Viber text
+        template.
+      properties:
+        phone:
+          type: string
+          description: The recipient's phone number in international format, including the country code.
+        message_type:
+          type: string
+          description: The type of the message. Must be set to "text_template".
+        method:
+          type: string
+          description: The method of sending the message (e.g. "transaction").
+        text:
+          type: string
+          description: The message text, matching the approved template syntax.
+        tracking_data:
+          type: string
+          description: Optional tracking identifier for the message.
+    vbs_single_fallback_msg:
+      type: object
+      title: Single Message with Fallback
+      description: >-
+        Send a Viber message with an automatic fallback channel in case the
+        recipient is unreachable on Viber. Fallback can be to WhatsApp
+        (`fallback_channel: whatsapp`) or SMS (`fallback_channel: sms`).
+        Include the corresponding `fallback_whatsapp` or `fallback_sms` block.
+      properties:
+        phone:
+          type: string
+          description: The recipient's phone number in international format, including the country code.
+        message_type:
+          type: string
+          description: The Viber message type (e.g. "text").
+        method:
+          type: string
+          description: The method of sending the message.
+        text:
+          type: string
+          description: The Viber message text.
+        tracking_data:
+          type: string
+          description: Optional tracking identifier for the message.
+        fallback_channel:
+          type: string
+          description: The fallback channel to use if Viber delivery fails. Must be "whatsapp" or "sms".
+          enum:
+            - whatsapp
+            - sms
+        fallback_whatsapp:
+          type: object
+          description: WhatsApp fallback configuration. Required when fallback_channel is "whatsapp".
+          properties:
+            fallback_sender:
+              type: string
+              description: The WhatsApp sender ID.
+            fallback_username:
+              type: string
+              description: The WhatsApp account username.
+            fallback_text:
+              type: string
+              description: The fallback message text.
+            template_id:
+              type: string
+              description: The WhatsApp template ID.
+            tm_id:
+              type: string
+              description: The TM ID for DLT compliance.
+            pe_id:
+              type: string
+              description: The PE ID for DLT compliance.
+        fallback_sms:
+          type: object
+          description: SMS fallback configuration. Required when fallback_channel is "sms".
+          properties:
+            fallback_sender:
+              type: string
+              description: The SMS sender ID.
+            fallback_username:
+              type: string
+              description: The SMS account username.
+            fallback_text:
+              type: string
+              description: The fallback SMS text.
+            template_id:
+              type: string
+              description: The SMS template ID.
+            tm_id:
+              type: string
+              description: The TM ID for DLT compliance.
+            pe_id:
+              type: string
+              description: The PE ID for DLT compliance.
+    vbs_campaign_textimage_msg:
+      type: object
+      title: Campaign Text Image
+      description: Send a campaign message combining text and an image to multiple recipients.
+      properties:
+        file_code:
+          type: string
+          description: The file code returned from the Campaign File Upload API.
+        campaign_name:
+          type: string
+          description: The name of the campaign.
+        personalised:
+          type: boolean
+          description: Whether the message uses personalised fields from the contact file.
+        payload:
+          type: object
+          description: The message payload.
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "text_image".
+            method:
+              type: string
+              description: The send method (e.g. "promotion").
+            img:
+              type: string
+              description: The URL of the image.
+            text:
+              type: string
+              description: The body text to display alongside the image.
+    vbs_campaign_video_text_action_button_msg:
+      type: object
+      title: Campaign Video Text Action Button
+      description: >-
+        Send a campaign video message with text and a structured action button
+        to multiple recipients.
+      properties:
+        file_code:
+          type: string
+          description: The file code returned from the Campaign File Upload API.
+        campaign_name:
+          type: string
+          description: The name of the campaign.
+        personalised:
+          type: boolean
+          description: Whether the message uses personalised fields from the contact file.
+        schedule_datetime:
+          type: string
+          description: >-
+            Optional scheduled send time in the format "YYYY-MM-DD HH:MM:SS".
+        timezone:
+          type: string
+          description: Timezone for the scheduled send (e.g. "Asia/Kolkata").
+        payload:
+          type: object
+          description: The message payload.
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "video_text_action_button".
+            method:
+              type: string
+              description: The send method (e.g. "promotion").
+            video:
+              type: string
+              description: The URL of the video file.
+            text:
+              type: string
+              description: The body text to display with the video.
+            thumbnail_url:
+              type: string
+              description: The thumbnail image URL for the video preview.
+            button:
+              type: object
+              description: The structured action button object.
+              properties:
+                button_url:
+                  type: string
+                  description: The URL the button should open.
+                button_text:
+                  type: string
+                  description: The text label displayed on the button.
+    vbs_campaign_text_template_msg:
+      type: object
+      title: Campaign Text Template
+      description: Send a branded text template message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+          description: The file code returned from the Campaign File Upload API.
+        campaign_name:
+          type: string
+          description: The name of the campaign.
+        personalised:
+          type: boolean
+          description: Whether the message uses personalised fields from the contact file.
+        payload:
+          type: object
+          description: The message payload.
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "text_template".
+            method:
+              type: string
+              description: The send method (e.g. "promotion").
+            text:
+              type: string
+              description: The message text matching the approved template syntax.
+            tracking_data:
+              type: string
+              description: Optional tracking identifier.
+    vbs_campaign_fallback_msg:
+      type: object
+      title: Campaign Message with Fallback
+      description: >-
+        Send a Viber campaign message with automatic fallback to WhatsApp or SMS
+        for recipients unreachable on Viber. Include `fallback_channel` and
+        the corresponding `fallback_whatsapp` or `fallback_sms` block inside
+        the payload.
+      properties:
+        file_code:
+          type: string
+          description: The file code returned from the Campaign File Upload API.
+        campaign_name:
+          type: string
+          description: The name of the campaign.
+        personalised:
+          type: boolean
+          description: Whether the message uses personalised fields from the contact file.
+        payload:
+          type: object
+          description: The message payload including the fallback configuration.
+          properties:
+            message_type:
+              type: string
+              description: The Viber message type (e.g. "image", "text").
+            method:
+              type: string
+              description: The send method (e.g. "promotion").
+            fallback_channel:
+              type: string
+              description: The fallback channel. Must be "whatsapp" or "sms".
+              enum:
+                - whatsapp
+                - sms
+            fallback_whatsapp:
+              type: object
+              description: WhatsApp fallback configuration.
+              properties:
+                fallback_sender:
+                  type: string
+                fallback_username:
+                  type: string
+                fallback_text:
+                  type: string
+                template_id:
+                  type: string
+                tm_id:
+                  type: string
+                pe_id:
+                  type: string
+            fallback_sms:
+              type: object
+              description: SMS fallback configuration.
+              properties:
+                fallback_sender:
+                  type: string
+                fallback_username:
+                  type: string
+                fallback_text:
+                  type: string
+                template_id:
+                  type: string
+                tm_id:
+                  type: string
+                pe_id:
+                  type: string
+    vbs_bulk_text_msg:
+      type: object
+      title: Bulk Text
+      description: Send a plain text message to multiple recipients via the bulk send API.
+      properties:
+        file_code:
+          type: string
+          description: The file code returned from the Campaign File Upload API.
+        campaign_name:
+          type: string
+          description: The campaign name.
+        personalised:
+          type: boolean
+          description: Whether the message uses personalised fields from the contact file.
+        schedule_datetime:
+          type: string
+          description: Optional scheduled send time (YYYY-MM-DD HH:MM:SS).
+        timezone:
+          type: string
+          description: Timezone for the scheduled send (e.g. "Asia/Kolkata").
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "text".
+            method:
+              type: string
+              description: The send method (e.g. "transaction", "promotion").
+            text:
+              type: string
+              description: The message text.
+    vbs_bulk_text_button_msg:
+      type: object
+      title: Bulk Text Button
+      description: Send a text message with an action button to multiple recipients.
+      properties:
+        file_code:
+          type: string
+          description: The file code returned from the Campaign File Upload API.
+        campaign_name:
+          type: string
+          description: The campaign name.
+        personalised:
+          type: boolean
+          description: Whether the message uses personalised fields.
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "media".
+            method:
+              type: string
+            text:
+              type: string
+              description: The message text.
+            button_text:
+              type: string
+              description: The text label for the action button.
+            button_link:
+              type: string
+              description: The URL the button should open.
+    vbs_bulk_text_button_image_msg:
+      type: object
+      title: Bulk Text Button Image
+      description: Send a text, button, and image message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+          description: The file code returned from the Campaign File Upload API.
+        campaign_name:
+          type: string
+          description: The campaign name.
+        personalised:
+          type: boolean
+          description: Whether the message uses personalised fields.
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "template".
+            method:
+              type: string
+            text:
+              type: string
+            button_text:
+              type: string
+            button_link:
+              type: string
+            img:
+              type: string
+              description: The URL of the image.
+    vbs_bulk_textimage_msg:
+      type: object
+      title: Bulk Text Image
+      description: Send a combined text and image message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "text_image".
+            method:
+              type: string
+            img:
+              type: string
+            text:
+              type: string
+    vbs_bulk_image_msg:
+      type: object
+      title: Bulk Image
+      description: Send a standalone image message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "image".
+            method:
+              type: string
+            img:
+              type: string
+              description: The URL of the image.
+    vbs_bulk_file_msg:
+      type: object
+      title: Bulk File
+      description: Send a file or document attachment to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "file".
+            method:
+              type: string
+            file_url:
+              type: string
+              description: The URL of the file to send.
+            file_name:
+              type: string
+              description: The display file name including extension.
+    vbs_bulk_video_msg:
+      type: object
+      title: Bulk Video
+      description: Send a video message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "video".
+            method:
+              type: string
+            video:
+              type: string
+              description: The URL of the video file.
+            thumbnail_url:
+              type: string
+              description: The thumbnail image URL for the video preview.
+    vbs_bulk_video_text_msg:
+      type: object
+      title: Bulk Video Text
+      description: Send a video with accompanying text to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        schedule_datetime:
+          type: string
+          description: Optional scheduled send time (YYYY-MM-DD HH:MM:SS).
+        timezone:
+          type: string
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "text_video".
+            method:
+              type: string
+            video:
+              type: string
+            text:
+              type: string
+            thumbnail_url:
+              type: string
+    vbs_bulk_video_text_action_button_msg:
+      type: object
+      title: Bulk Video Text Action Button
+      description: Send a video with text and a structured action button to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        schedule_datetime:
+          type: string
+          description: Optional scheduled send time (YYYY-MM-DD HH:MM:SS).
+        timezone:
+          type: string
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "video_text_action_button".
+            method:
+              type: string
+            video:
+              type: string
+            text:
+              type: string
+            thumbnail_url:
+              type: string
+            button:
+              type: object
+              properties:
+                button_url:
+                  type: string
+                button_text:
+                  type: string
+    vbs_bulk_text_template_msg:
+      type: object
+      title: Bulk Text Template
+      description: Send an approved text template message to multiple recipients.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: Must be set to "text_template".
+            method:
+              type: string
+            text:
+              type: string
+            tracking_data:
+              type: string
+    vbs_bulk_fallback_msg:
+      type: object
+      title: Bulk Message with Fallback
+      description: >-
+        Send a bulk Viber message with automatic fallback to WhatsApp or SMS
+        for recipients unreachable on Viber.
+      properties:
+        file_code:
+          type: string
+        campaign_name:
+          type: string
+        personalised:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            message_type:
+              type: string
+              description: The Viber message type.
+            method:
+              type: string
+            fallback_channel:
+              type: string
+              enum:
+                - whatsapp
+                - sms
+            fallback_whatsapp:
+              type: object
+              properties:
+                fallback_sender:
+                  type: string
+                fallback_username:
+                  type: string
+                fallback_text:
+                  type: string
+                template_id:
+                  type: string
+                tm_id:
+                  type: string
+                pe_id:
+                  type: string
+            fallback_sms:
+              type: object
+              properties:
+                fallback_sender:
+                  type: string
+                fallback_username:
+                  type: string
+                fallback_text:
+                  type: string
+                template_id:
+                  type: string
+                tm_id:
+                  type: string
+                pe_id:
+                  type: string
+    vbs_template_create:
+      type: object
+      title: Create Template
+      required:
+        - template_name
+        - template_syntax
+        - message_type
+        - operator_template_id
+      properties:
+        template_name:
+          type: string
+          description: A unique name for the template.
+        template_syntax:
+          type: string
+          description: >-
+            The template message text. Use {{parameter_name}} syntax for
+            variable placeholders.
+        message_type:
+          type: string
+          description: The type of template (e.g. "viber_otp", "text_template").
+        operator_template_id:
+          type: string
+          description: The operator-assigned template ID provided by Viber.
+    vbs_report_create:
+      type: object
+      title: Create Report Request
+      required:
+        - start_date
+        - end_date
+      properties:
+        start_date:
+          type: string
+          description: Start date and time for the report range (YYYY-MM-DD HH:MM:SS).
+        end_date:
+          type: string
+          description: End date and time for the report range (YYYY-MM-DD HH:MM:SS).
+        filters:
+          type: object
+          description: Optional filters to apply to the report data.
+          properties:
+            message_type:
+              type: string
+              description: Filter by message type (e.g. "text", "image", "all").
+            service_type:
+              type: string
+              description: Filter by service type (e.g. "one_way", "two_way", "all").
+        projections:
+          type: array
+          description: List of fields to include in the report CSV.
+          items:
+            type: string
